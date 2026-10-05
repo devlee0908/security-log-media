@@ -20,13 +20,16 @@
 ## 슬라이드 구성 (7장 권장)
 1. cover (영상) 2~5. content n=1..4 (영상) 6. summary (이미지) 7. follow (이미지)
 
-## 표지 애니메이션 (cover.anim) — 주제에 맞게 선택, 같은 장면 연속 사용 지양
+## 표지 애니메이션 (cover.anim)
+- 규칙: 표지는 그날 사건을 상징하는 장면이어야 함. 최근 게시물(`publish.py recent` 캡션/주제)과 같은 장면 반복 금지.
+- 맞는 장면이 없으면 template.html 의 ANIM 에 새 장면 함수를 추가해서 사용(기존 함수 스타일: grid 배경, 레드/그린 포인트, 6초 루프).
 - rain   : 계정/비밀번호 탈취 {word, wordSize}
 - gauge  : 취약점 점수 {score, label}
 - ransom : 랜섬웨어 {files:[8개 파일명], banner}
 - otp    : MFA/인증 팁 {app, code(6자리)}
 - week   : 주간 정리 {title:"WEEK 41", items:[[["라벨","r|y|g"],...] x7요일]}
 - call   : 보이스피싱/전화 사기 {caller, number, initial, warn}
+- breach : 여러 기관 연쇄 침해 {bot:"AI BOT?", label:"BREACHED", nodes:[["기관명","피해규모"] x≤6]}
 
 ## 본문 애니메이션 (content.anim)
 - terminal  : {title, count, countLabel, rows:[["계정명", 성공여부bool] x≤9]}
@@ -36,6 +39,7 @@
 
 ## 문구 규칙
 - 제목 2줄(\n), 강조는 <b>…</b>. 본문 강조는 [대괄호] → 초록 강조.
-- 본문 3~4문장, 사실은 반드시 출처 기사로 확인. 추측·과장 금지.
+- 본문은 화면에 4줄 이내(약 110자 이내, 2~3문장). 넘치면 줄일 것. 사실은 반드시 출처 기사로 확인. 추측·과장 금지.
+- 렌더 전 확인: content 슬라이드의 .text 하단이 1300px 를 넘지 않아야 함.
 - summary.source 에 출처(기관/매체, 날짜) 명시.
 - caption: 따옴표 훅 한 줄 → 짧은 단락 3~4개 → "👉🏻 보안 소식 놓치지 않으려면? @security.log" → "💾 저장해두고 팀에 공유하세요 :)" → 해시태그 8~10개 → 마지막 줄 `security.log · <CAT>` (시리즈형은 `security.log · TIPS #003`).
