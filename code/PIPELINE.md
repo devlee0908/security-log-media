@@ -29,6 +29,7 @@
 - otp    : MFA/인증 팁 {app, code(6자리)}
 - week   : 주간 정리 {title:"WEEK 41", items:[[["라벨","r|y|g"],...] x7요일]}
 - call   : 보이스피싱/전화 사기 {caller, number, initial, warn}
+- dual   : 보안 도구의 악용·양면성 {left, right, chip, flash}
 - breach : 여러 기관 연쇄 침해 {bot:"AI BOT?", label:"BREACHED", nodes:[["기관명","피해규모"] x≤6]}
 
 ## 본문 애니메이션 (content.anim)
@@ -36,6 +37,9 @@
 - timeline  : {marks:[0..n-1], pos:[분 단위 0~7], total, label}
 - network   : {center, centerSub, nodes:[4~6개], flag}  ※ 노드 수는 제목·본문의 숫자(예: '6곳')와 반드시 일치
 - checklist : {items:[4개 짧은 문장]}
+- console   : {title, lines:[["작업","상태","r|g"] x≤6]}  (로그/콘솔 화면)
+- loop      : {steps:[4~6개], center, sub}  (반복 순환 구조)
+- map       : {total, label, local, localLabel, kx, ky}  (전 세계 분포 + 한국 강조)
 
 ## 문구 규칙
 - follow 슬라이드 sub 는 EXAMPLE.json 문구 그대로 사용("저장해두고 동료에게 공유해 주세요"). '가족' 표현 사용 금지.
