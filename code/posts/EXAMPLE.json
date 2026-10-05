@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "logo": "SECURITY<i>.</i>LOG",
+    "handle": "security.log",
+    "mark": "&gt;_",
+    "bio": "Security Log | 매일 보는 보안 뉴스"
+  },
+  "slides": [
+    {
+      "type": "cover",
+      "cat": "NEWS",
+      "anim": "rain",
+      "title": "기본 비밀번호 하나로\nMS365 <b>7곳</b>이 뚫렸다",
+      "data": {
+        "word": "DEFAULT PASSWORD",
+        "wordSize": 80
+      }
+    },
+    {
+      "type": "content",
+      "n": 1,
+      "anim": "terminal",
+      "title": "아무도 안 보던 계정이\n뚫렸어요",
+      "body": "보안기업 프루프포인트가 MS365 테넌트 28곳을 노린 공격을 분석했어요. 공격자는 모의해킹 도구 TeamFiltration을 악용해 [계정 5,714개에 기본 비밀번호를 대입]했고, 그중 7개가 뚫렸어요.",
+      "data": {
+        "title": "password-spray :: 28 tenants",
+        "count": 32825,
+        "countLabel": "시도",
+        "rows": [
+          [
+            "svc-pos01",
+            false
+          ],
+          [
+            "svc-ticket",
+            false
+          ],
+          [
+            "pay-batch",
+            true
+          ],
+          [
+            "svc-print",
+            false
+          ],
+          [
+            "pos-store12",
+            true
+          ],
+          [
+            "svc-backup",
+            false
+          ],
+          [
+            "ticket-api",
+            true
+          ],
+          [
+            "svc-scan",
+            false
+          ],
+          [
+            "pos-store07",
+            true
+          ]
+        ]
+      }
+    },
+    {
+      "type": "content",
+      "n": 2,
+      "anim": "timeline",
+      "title": "7건 중 6건이\n단 7분 만에",
+      "body": "공격은 8월 13~16일에 진행됐는데, 7건 중 6건이 7분 사이에 성공했어요. 연구진은 이를 [여러 계정이 같은 기본 비밀번호를 그대로 쓰고 있었다]는 신호로 봤어요.",
+      "data": {
+        "marks": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "pos": [
+          0.4,
+          1.3,
+          2.6,
+          3.9,
+          5.2,
+          6.8
+        ],
+        "total": 7,
+        "label": "7분 안에 뚫린 계정"
+      }
+    },
+    {
+      "type": "content",
+      "n": 3,
+      "anim": "network",
+      "title": "뚫린 건 사람이 아니라\n업무용 계정",
+      "body": "털린 계정은 모두 결제·티켓·POS용 서비스 계정이었어요. MFA도, 정상 로그인 기록도 없던 계정이죠. 공격자는 Office·Teams·SharePoint 등에 접근했고, [90초 만에 독일 VPN으로 갈아타] 사내 VPN까지 두드렸어요.",
+      "data": {
+        "center": "svc-pay",
+        "centerSub": "결제 시스템 계정",
+        "nodes": [
+          "Office",
+          "OneDrive",
+          "Teams",
+          "Azure 포털",
+          "SharePoint"
+        ],
+        "flag": "90초 · 독일 VPN 전환"
+      }
+    },
+    {
+      "type": "content",
+      "n": 4,
+      "anim": "checklist",
+      "title": "우리 회사는 괜찮을까?\n지금 점검하세요",
+      "body": "서비스 계정 목록을 만들고 담당자를 정하세요. 안 쓰는 계정은 지우고, 물려받은 비밀번호는 바꾸고, [MFA와 조건부 액세스를 꼭 적용]하세요. 로그인 기록에서 대량 인증 실패도 확인해 보세요.",
+      "data": {
+        "items": [
+          "서비스 계정 목록화 · 담당자 지정",
+          "안 쓰는 계정 삭제",
+          "기본·상속 비밀번호 교체",
+          "MFA · 조건부 액세스 적용"
+        ]
+      }
+    },
+    {
+      "type": "summary",
+      "kicker": "SUMMARY",
+      "title": "3줄 요약",
+      "points": [
+        "MS365 테넌트 28곳 공격, [7개 계정 침해]",
+        "원인은 관리 안 된 서비스 계정의 [기본 비밀번호 + MFA 미적용]",
+        "서비스 계정 [전수 점검과 MFA 적용]이 해법"
+      ],
+      "source": "출처: Proofpoint 위협 리서치 (2026.09.30)<br>Cyber Security News 보도 재구성"
+    },
+    {
+      "type": "follow",
+      "title": "매일 업데이트 되는\n<b style='color:#00A060'>보안 뉴스와 트렌드</b>가 궁금하다면?",
+      "sub": "저장해두고 보안 담당자에게 공유해 주세요\n놓치면 안 될 보안 이슈만 골라 전해드릴게요"
+    }
+  ],
+  "caption": "“비밀번호 안 바꾼 계정 하나가 회사 문을 열었다” 😱\n\nMS365 테넌트 28곳을 노린 공격에서 계정 7개가 뚫렸어요.\n\n범인은 아무도 관리하지 않던 결제·POS용 서비스 계정. 기본 비밀번호 그대로에 MFA도 없었대요.\n\n심지어 7건 중 6건은 단 7분 만에 털렸다고 해요.\n\n우리 회사 계정은 괜찮은지, 카드뉴스 넘기며 점검 포인트 확인해 보세요!\n\n👉🏻 보안 소식 놓치지 않으려면? @security.log\n💾 저장해두고 팀에 공유하세요 :)\n\n#보안뉴스 #사이버보안 #정보보안 #해킹 #MS365 #마이크로소프트365 #비밀번호 #MFA #보안트렌드 #IT뉴스\n\nsecurity.log · NEWS"
+}
