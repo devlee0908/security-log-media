@@ -17,8 +17,9 @@
 | TIPS | 일반인용 생활 보안 실천법 | `"no"`: series 번호 |
 | WORDS | 보안 용어 쉬운 설명 | `"no"`: series 번호 |
 
-## 슬라이드 구성 (7장 권장)
-1. cover (영상) 2~5. content n=1..4 (영상) 6. summary (이미지) 7. follow (이미지)
+## 슬라이드 구성 (내용에 필요한 만큼, 최대 10장 = 인스타 API 한도)
+cover (영상) → content n=1..최대 7 (영상) → summary (이미지) → follow (이미지).
+짧게 끝내지 말 것: 사건 개요 → 기간/경위 → 유출 항목 → 왜 위험한지 → 원인 → 당국 대응 → 2차 피해 → 대응법 처럼 충분히 풀어 쓸 것(보통 8~10장).
 
 ## 표지 배경
 - 카테고리별 배경 분위기·제목 강조색은 cover.cat 으로 자동 적용(NEWS 그린, CVE 레드, TREND 오렌지, TIPS 옐로, WEEKLY 블루, WORDS 퍼플). 따로 지정하지 말 것.
@@ -35,6 +36,7 @@
 - call   : 보이스피싱/전화 사기 {caller, number, initial, warn}
 - dual   : 보안 도구의 악용·양면성 {left, right, chip, flash}
 - breach : 여러 기관 연쇄 침해 {bot:"AI BOT?", label:"BREACHED", nodes:[["기관명","피해규모"] x≤6]}
+- registry : 협력사·정식 권한 악용으로 대량 유출 {region, total(숫자), label, nodes:["원천","경유","유출처"], ok, bad}
 
 ## 본문 애니메이션 (content.anim)
 - terminal  : {title, count, countLabel, rows:[["계정명", 성공여부bool] x≤9]}
@@ -43,6 +45,10 @@
 - checklist : {items:[4개 짧은 문장]}
 - console   : {title, lines:[["작업","상태","r|g"] x≤6]}  (로그/콘솔 화면)
 - loop      : {steps:[4~6개], center, sub}  (반복 순환 구조)
+- span      : 탐지까지 걸린 기간 {days, label, events:[["날짜","설명"] x3]}
+- idcard    : 유출된 개인정보 항목 {head, fields:[["항목","마스킹 값"] x3], note, total, unit}
+- quote     : 공식 발언 + 대응 현황 {quote(\n 2줄), who, chips:[["텍스트","g|y"] x3]}
+- scam      : 2차 피해 사칭 메시지 예시 {msgs:[["[발신]","짧은 문구"] x4], note}
 - map       : {total, label, local, localLabel, kx, ky}  (전 세계 분포 + 한국 강조)
 
 ## 문구 규칙
