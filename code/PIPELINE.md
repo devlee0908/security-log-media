@@ -34,12 +34,13 @@
 ## 본문 애니메이션 (content.anim)
 - terminal  : {title, count, countLabel, rows:[["계정명", 성공여부bool] x≤9]}
 - timeline  : {marks:[0..n-1], pos:[분 단위 0~7], total, label}
-- network   : {center, centerSub, nodes:[5개], flag}
+- network   : {center, centerSub, nodes:[4~6개], flag}  ※ 노드 수는 제목·본문의 숫자(예: '6곳')와 반드시 일치
 - checklist : {items:[4개 짧은 문장]}
 
 ## 문구 규칙
 - 제목 2줄(\n), 강조는 <b>…</b>. 본문 강조는 [대괄호] → 초록 강조.
 - 본문은 화면에 4줄 이내(약 110자 이내, 2~3문장). 넘치면 줄일 것. 사실은 반드시 출처 기사로 확인. 추측·과장 금지.
+- 그림 속 개수·숫자는 제목/본문의 숫자와 반드시 일치시킬 것.
 - 렌더 전 확인: content 슬라이드의 .text 하단이 1300px 를 넘지 않아야 함.
 - summary.source 에 출처(기관/매체, 날짜) 명시.
 - caption: 따옴표 훅 한 줄 → 짧은 단락 3~4개 → "👉🏻 보안 소식 놓치지 않으려면? @security.log" → "💾 저장해두고 팀에 공유하세요 :)" → 해시태그 8~10개 → 마지막 줄 `security.log · <CAT>` (시리즈형은 `security.log · TIPS #003`).
