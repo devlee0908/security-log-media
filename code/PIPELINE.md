@@ -38,6 +38,9 @@ cover(영상) → content n=1.. (영상) → summary(이미지) → follow(이�
 - 범위: WORDS·TIPS 우선(표지 1 + 본문 1), NEWS 는 표지만 하루 1장, TREND 는 표지만 선택, CVE·WEEKLY 사용 금지.
 - 이미지는 배경으로만 사용. 한글·숫자·로고·제목은 항상 코드로 얹는다.
 - 금지: 실제 기업·기관 로고, 실존 인물 얼굴, 읽을 수 있는 글자, 공포 조장·선정적 이미지.
+- 생성: `python gen_image.py "<영어 장면 묘사>" assets/<날짜>-<cat>-<번호>.png --ratio 4:5` (본문용은 --ratio 4:3). 실패 시 종료코드 1 → 코드 장면 사용.
+- 사용: 해당 슬라이드를 `"anim":"photo", "data":{"src":"assets/<파일>.png", "label":"(본문만, 선택) 짧은 라벨"}` 로 지정. 표지 제목·태그는 기존처럼 HTML 로 얹힘.
+- 장면 묘사는 비유·분위기 중심(예: 피싱=어두운 바다 위 빛나는 낚싯바늘). 게시물 내용을 사실처럼 보이게 하는 장면(실제 건물·사건 현장 재현) 금지.
 - 생성 후 Read 로 직접 확인. 문제 있으면 최대 2회 재생성, 그래도 안 되면 코드 장면으로 대체.
 
 ## 표지 배경
@@ -68,6 +71,7 @@ cover(영상) → content n=1.. (영상) → summary(이미지) → follow(이�
 - idcard    : 유출된 개인정보 항목 {head, fields:[["항목","마스킹 값"] x3], note, total, unit}
 - quote     : 공식 발언 + 대응 현황 {quote(\n 2줄), who, chips:[["텍스트","g|y"] x3]}
 - scam      : 2차 피해 사칭 메시지 예시 {msgs:[["[발신]","짧은 문구"] x4], note}
+- photo     : AI 배경 이미지 {src, label?}  (AI 이미지 규칙 참고)
 - map       : {total, label, local, localLabel, kx, ky}  (전 세계 분포 + 한국 강조)
 
 ## 문구 규칙
