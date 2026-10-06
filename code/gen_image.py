@@ -5,8 +5,8 @@ Exit code 1 on failure -> caller should fall back to a code-drawn scene.
 """
 import base64, json, os, sys, urllib.request, urllib.error
 
-MODELS = [os.environ.get("GEMINI_IMAGE_MODEL"), "gemini-3.1-flash-image-preview", "gemini-3-pro-image-preview",
-          "imagen-4.0-fast-generate-001", "imagen-4.0-generate-001"]
+MODELS = [os.environ.get("GEMINI_IMAGE_MODEL"), "gemini-3.1-flash-image", "gemini-3.1-flash-image-preview",
+          "gemini-3-pro-image", "gemini-2.5-flash-image"]
 GUARD = ("Dark cinematic editorial illustration for a cybersecurity news card. Deep dark background, "
          "subtle neon accent lighting, lots of empty dark space in the lower 40% for text overlay. "
          "STRICTLY NO text, letters, numbers, logos, brand marks, flags or real human faces. Scene: ")
