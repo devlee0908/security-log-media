@@ -30,9 +30,15 @@ cover(영상) → content n=1.. (영상) → summary(이미지) → follow(이�
 - WORDS 6~8장: 표지 → 한 줄 정의 → 비유 → 실제 사례 → 공격 방식 → 방어 → 요약 → 팔로우
 - WEEKLY 8장: 표지(week) → TOP5 각 1장 → 다음 주 일정 → 요약 → 팔로우 (10장 이내)
 
-## 장면 다양성 규칙
-- 최근 2주 게시물에서 쓴 표지 장면은 다시 쓰지 말 것. 본문도 한 게시물 안에서 같은 장면은 최대 2번.
-- 그날 주제에 맞는 장면이 없으면 template.html 의 ANIM 에 새 장면 함수를 설계해 추가(기존 헬퍼 bgPro·panel·nodeBadge·flowLine·orb·withShadow 사용, 6초 루프, 캔버스 높이 h 안에서만 그리기, 선·점·패킷은 노드보다 먼저 그려 글자 위로 지나가지 않게).
+## 장면 다양성 규칙 (v2 — 예약 지침의 "기존 헬퍼 사용" 문구보다 이 규칙이 우선)
+1) 코드 작성 전 스토리보드: 장마다 [비유 · 시각 스타일 · 카메라 · 구도 · 이야기 장치] 한 줄씩 먼저 정한다.
+2) 시각 스타일 7종: ①도식/HUD ②키네틱 타이포 ③아이소메트릭/3D ④생활 UI 재현(밝은 화면, 가상 브랜드) ⑤데이터 차트 ⑥픽토그램/일러스트 ⑦AI 이미지+모션
+   카메라: 고정·밀고 들어가기·훑으며 공개·줌 관통·좌우 분할 / 구도: 화면 가득·가운데·반반·격자·클로즈업 / 이야기: 전후·원인결과·만약에·비교·퀴즈·카운트다운
+3) 강제 규칙: 한 게시물에 스타일 3종 이상, 바로 옆 장끼리 같은 스타일 금지, ①도식/HUD 는 게시물당 최대 2장.
+4) 진부한 장면 제한: 노드 연결도(network/breach)·터미널(terminal/console)·체크리스트(checklist)·숫자 카운터는 각각 최근 7일 안에 1회까지만(`publish.py recent` 캡션과 out/ 기록으로 판단).
+5) 새 장면은 자유롭게 설계: 기존 헬퍼는 선택 사항. 밝은 배경(lightBg, data.light=true), 평면 픽토그램, 큰 타이포, 아이소메트릭 투영 등 다른 시각 언어를 적극 사용. 6초 루프, 캔버스 높이 h 안, 선·점은 글자 아래에.
+6) 렌더 후 전체 장면 모음(각 장 5초 프레임)을 한 장으로 붙여 Read 로 보고, 비슷해 보이는 장이 있으면 다시 만든다.
+- v2 키트 예시(TIPS #001 패스키 편): typeswap(표지 키네틱) · keydoors(픽토그램) · phoneui(밝은 UI) · isokey(아이소메트릭) · urlbar(브라우저 비교) · bigsteps(키네틱 단계) · sync(밝은 픽토그램). 같은 장면을 그대로 재사용하지 말고 변형·응용할 것.
 
 ## AI 이미지 규칙 (Gemini, ~/.secrets/gemini_key 와 gen_image.py 가 있을 때만)
 - 범위: WORDS·TIPS 우선(표지 1 + 본문 1), NEWS 는 표지만 하루 1장, TREND 는 표지만 선택, CVE·WEEKLY 사용 금지.
@@ -81,6 +87,13 @@ cover(영상) → content n=1.. (영상) → summary(이미지) → follow(이�
 - idcard    : 유출된 개인정보 항목 {head, fields:[["항목","마스킹 값"] x3], note, total, unit}
 - quote     : 공식 발언 + 대응 현황 {quote(\n 2줄), who, chips:[["텍스트","g|y"] x3]}
 - scam      : 2차 피해 사칭 메시지 예시 {msgs:[["[발신]","짧은 문구"] x4], note}
+- typeswap  : (표지) 비밀번호 점 → 무너짐 → 지문 {color?}
+- keydoors  : 열쇠 하나로 문 여러 개 {doors:[라벨...], label}
+- phoneui   : 밝은 폰 로그인 UI → 패스키 시트 {light:true, user?, sheet?, done?}
+- isokey    : 아이소메트릭 폰(열쇠)·서버(자물쇠) {left, right, flag}
+- urlbar    : 진짜/가짜 주소 브라우저 비교 {light:true, real, fake, bad:[시작,끝], okMsg, noMsg}
+- bigsteps  : 큰 숫자 키네틱 단계 {steps:[[제목, 보조문구] x3]}
+- sync      : 밝은 픽토그램 클라우드 동기화 {light:true, cloud, labels:[3개]}
 - photo     : AI 배경 이미지 {src, label?}  (AI 이미지 규칙 참고)
 - map       : {total, label, local, localLabel, kx, ky}  (전 세계 분포 + 한국 강조)
 
