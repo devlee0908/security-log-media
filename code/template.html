@@ -977,10 +977,11 @@ const ANIM={
   days.forEach((dd,i)=>{const x=x0+i*cw;txt(g,dd,x+cw/2,y0+50,34,'#1E2530',900);g.fillStyle='#D8CFBE';g.fillRect(x+cw-1,y0+80,2,520)});
   g.fillStyle='#1E2530';g.fillRect(x0,y0+78,cw*6,4);
   d.ev.forEach((e,k)=>{const[di,row,label,acc]=e,x=x0+di*cw+10,y=y0+110+row*170,t0=0.3+k*0.35,q=ease((t-t0)/0.35);if(q<=0)return;
-   g.save();g.translate(x+65,y+60);g.scale(q,q);g.translate(-x-65,-y-60);withShadow(g,'rgba(40,30,10,.15)',16,8,()=>{g.fillStyle='#fff';rr(g,x,y,cw-20,130,14);g.fill()});
+   g.save();g.translate(x+65,y+60);g.scale(q,q);g.translate(-x-65,-y-60);const fu=e[4]==='follow';withShadow(g,'rgba(40,30,10,.15)',16,8,()=>{g.fillStyle=fu?'#F4EFE6':'#fff';rr(g,x,y,cw-20,130,14);g.fill()});if(fu){g.save();g.setLineDash([6,6]);g.strokeStyle='#9A917F';g.lineWidth=3;rr(g,x,y,cw-20,130,14);g.stroke();g.restore()}
    label.split('\n').forEach((l,j)=>txt(g,l,x+65,y+55+j*38,28,'#1E2530',900));g.restore();
    if(acc&&t>2.8){const u=clamp((t-2.8-k*0.12)/0.4);g.strokeStyle='#E5484D';g.lineWidth=5;g.beginPath();g.ellipse(x+65,y+65,72,74,-0.2,0,Math.PI*2*u);g.stroke()}});
-  if(t>3.6){g.globalAlpha=ease((t-3.6)/0.4);txt(g,d.note,540,h-50,32,'#E5484D',900);g.globalAlpha=1}
+  d.ev.forEach(e=>{if(e[4]!=='follow'||t<2.2)return;const x1=x0+75,x2=x0+e[0]*cw+75,yb=y0+250;g.globalAlpha=ease((t-2.2)/0.5);g.save();g.setLineDash([8,8]);g.strokeStyle='#9A917F';g.lineWidth=3;g.beginPath();g.moveTo(x1,yb);g.bezierCurveTo(x1,yb+300,x2,yb+300,x2,yb);g.stroke();g.restore();txt(g,'월요일 사고의 후속',(x1+x2)/2+60,yb+262,26,'#7A6F5B',900);g.globalAlpha=1});
+  if(t>3.6){g.globalAlpha=ease((t-3.6)/0.4);txt(g,d.note,540,h-50,30,'#E5484D',900);g.globalAlpha=1}
  },
  bankkey(g,t,d,h){ // dark: a stolen key slides through six bank facades; then a trail leads to the AI chat file
   bgPro(g,h);const B='#5AB0FF';
