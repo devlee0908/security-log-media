@@ -62,43 +62,55 @@
   {
    "type": "content",
    "n": 4,
-   "anim": "toggleoff",
+   "anim": "settingsteps",
    "title": "ChatGPT는\n'데이터 제어'에서",
    "body": "설정 → 데이터 제어 → [‘Improve the model for everyone’ 끄기]. 잠깐 쓸 땐 [임시 채팅]도 좋아요. 학습엔 안 쓰이고, 안전 목적으로 최대 30일 보관돼요.",
    "data": {
     "light": true,
-    "crumb": "설정  ›  데이터 제어",
-    "opt": "Improve the model for everyone",
-    "optk": "모두를 위한 모델 개선",
-    "done": "✓ 이후 대화는 학습에 안 쓰여요",
-    "tmp": "임시 채팅",
-    "tmpl": [
-     "학습에 사용 안 함",
-     "최대 30일 보관",
-     "기록에 안 남음"
+    "svc": "ChatGPT",
+    "goal": "학습에 쓰지 않게 하기",
+    "steps": [
+     "설정",
+     "데이터 제어",
+     "Improve the model for everyone"
+    ],
+    "kor": "모두를 위한 모델 개선",
+    "facts": [
+     [
+      "끄면",
+      "이후 대화는\n학습에 안 쓰여요"
+     ],
+     [
+      "임시 채팅",
+      "학습 X\n최대 30일 보관"
+     ]
     ]
    }
   },
   {
    "type": "content",
    "n": 5,
-   "anim": "crumbs",
+   "anim": "settingsteps",
    "title": "Gemini는\n'활동'에서",
    "body": "설정 및 도움말 → 활동 → [사용 중지]. 끄면 이후 대화는 학습에 안 쓰이고, 서비스 제공을 위해 72시간만 보관돼요. [임시 채팅]도 학습에 안 쓰여요.",
    "data": {
-    "path": [
+    "light": true,
+    "svc": "Gemini",
+    "goal": "학습에 쓰지 않게 하기",
+    "steps": [
      "설정 및 도움말",
      "활동",
-     "사용 중지"
+     "활동 기록 사용 중지"
     ],
+    "kor": "끄면 새 대화가 활동에 안 남아요",
     "facts": [
      [
-      "학습 X",
-      "끈 뒤 새 대화"
+      "끄면",
+      "이후 대화는\n학습에 안 쓰여요\n(72시간 보관)"
      ],
      [
-      "72시간",
-      "서비스 제공용 보관"
+      "임시 채팅",
+      "학습 X\n3일 보관"
      ]
     ]
    }
@@ -106,22 +118,29 @@
   {
    "type": "content",
    "n": 6,
-   "anim": "beforeafter",
+   "anim": "settingsteps",
    "title": "Claude는\n'개인정보'에서",
    "body": "설정 → 개인정보 → [‘Help improve our AI models’ 끄기]. 끄면 새 대화와 이전 대화 모두 앞으로의 학습에서 빠져요. 단, 이미 시작된 학습에는 영향이 없어요.",
    "data": {
     "light": true,
-    "on": [
-     "ON",
-     "새 대화가",
-     "학습에 쓰일 수 있음"
+    "svc": "Claude",
+    "goal": "학습에 쓰지 않게 하기",
+    "steps": [
+     "설정",
+     "개인정보",
+     "Help improve our AI models"
     ],
-    "off": [
-     "OFF",
-     "새 대화·이전 대화",
-     "앞으로 학습 제외"
-    ],
-    "opt": "Help improve our AI models"
+    "kor": "AI 모델 개선 돕기",
+    "facts": [
+     [
+      "끄면",
+      "새 대화·이전 대화\n앞으로 학습 제외"
+     ],
+     [
+      "주의",
+      "이미 시작된 학습엔\n영향 없어요"
+     ]
+    ]
    }
   },
   {
