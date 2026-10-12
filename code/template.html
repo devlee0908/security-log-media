@@ -1304,7 +1304,7 @@ const ANIM={
   const cut=t>2.4;g.save();g.setLineDash([12,10]);g.lineDashOffset=-t*40;g.strokeStyle=cut?'#B3A88F':RED;g.lineWidth=6;g.beginPath();g.moveTo(sx,sy);g.quadraticCurveTo((sx+ix)/2,iy-40,ix-80,iy+20);g.stroke();g.restore();
   const mx=(sx+ix)/2,my=(sy+iy)/2-50;if(cut){g.fillStyle='#F6F1E7';g.fillRect(mx-30,my-30,60,60);g.strokeStyle='#2E8A5F';g.lineWidth=8;g.beginPath();g.moveTo(mx-24,my-24);g.lineTo(mx+24,my+24);g.moveTo(mx+24,my-24);g.lineTo(mx-24,my+24);g.stroke()}
   else{g.fillStyle=RED;g.beginPath();g.arc(mx,my,30,0,7);g.fill();txt(g,'?',mx,my+12,36,'#fff',900)}
-  txt(g,cut?d.fix:d.q,ix-40,iy+130,28,cut?'#2E8A5F':RED,900);
+  txt(g,cut?d.fix:d.q,1040,iy+130,28,cut?'#2E8A5F':RED,900,FONT,'right');
   const[lx,ly]=Q(0,200,0);txt(g,d.store,lx-40,ly+50,28,'#4A5563',900);
  },
  dossiers(g,t,d,h){ // dark: three case files slide in from right, each with a stamp-like tag
