@@ -90,12 +90,16 @@ def publish(out):
     print("published", pid, ig(f"{pid}?fields=permalink").get("permalink"))
 
 
-def publish_reel(video, caption_file, cover_ms=4500):
+def publish_reel(video, caption_file, cover=None, cover_ms=4500):
     """Post a single Reel (also shown in the feed grid)."""
     import time
     url = cld_upload(video, "reel-" + str(int(time.time())))
-    c = ig(f"{UID}/media", {"media_type": "REELS", "video_url": url, "caption": Path(caption_file).read_text(),
-                            "share_to_feed": "true", "thumb_offset": str(cover_ms)})["id"]
+    d = {"media_type": "REELS", "video_url": url, "caption": Path(caption_file).read_text(), "share_to_feed": "true"}
+    if cover:
+        d["cover_url"] = cld_upload(cover, "reel-cover-" + str(int(time.time())))
+    else:
+        d["thumb_offset"] = str(cover_ms)
+    c = ig(f"{UID}/media", d)["id"]
     wait(c, tries=80)
     pid = ig(f"{UID}/media_publish", {"creation_id": c})["id"]
     print("published", pid, ig(f"{pid}?fields=permalink").get("permalink"))
@@ -110,4 +114,4 @@ if __name__ == "__main__":
     elif cmd == "publish":
         publish(sys.argv[2])
     elif cmd == "reel":
-        publish_reel(sys.argv[2], sys.argv[3])
+        publish_reel(sys.argv[2], sys.argv[3], sys.argv[4] if len(sys.argv) > 4 else None)

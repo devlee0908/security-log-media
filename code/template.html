@@ -1559,6 +1559,15 @@ const ANIM={
   txt(g,d.app,px+pw/2,py+90,26,'#E9EDF2',900);txt(g,d.opt,px+pw/2,py+250,30,'#E9EDF2',800);const on=ease((t-0.6)/0.4);g.fillStyle=on>0.5?'#3BA776':'#3A4555';rr(g,px+pw/2-80,py+290,160,86,43);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(px+pw/2-40+80*on,py+333,34,0,7);g.fill();
   if(on>0.9)txt(g,'✓ ON',px+pw/2,py+460,40,'#5BE38E',900);
   if(t>d.shareAt){const q=ease((t-d.shareAt)/0.5);g.globalAlpha=q;panel(g,580,250,400,300,30,ACC);g.strokeStyle=ACC;g.lineWidth=8;g.lineCap='round';g.beginPath();g.moveTo(700,400);g.lineTo(860,330);g.moveTo(820,320);g.lineTo(860,330);g.lineTo(840,368);g.stroke();g.lineCap='butt';txt(g,d.share,780,500,34,'#F2F4F7',900);g.globalAlpha=1}},
+ reelcover(g,t,d,h){ // 9:16 cover designed for the 3:4 grid crop (safe y 240..1680)
+  const gr=g.createLinearGradient(0,0,0,h);gr.addColorStop(0,'#0A0F0C');gr.addColorStop(1,'#050607');g.fillStyle=gr;g.fillRect(0,0,W,h);
+  glow(g,540,900,700,'rgba(255,77,94,.22)');
+  for(let i=0;i<16;i++){const c=i%8,r=Math.floor(i/8),x=120+c*120,y=380+r*130;g.strokeStyle=RED;g.lineWidth=7;g.beginPath();g.arc(x+12,y-6,22,Math.PI,0);g.stroke();g.fillStyle=hx(RED,.85);rr(g,x-20,y-6,64,52,8);g.fill()}
+  txt(g,d.k,540,330,40,ACC,900,MONO);
+  txt(g,d.l1,540,820,120,'#FFFFFF',900);withShadow(g,hx(RED,.7),40,0,()=>txt(g,d.big,540,1010,210,RED,900));txt(g,d.l2,540,1160,120,'#FFFFFF',900);
+  g.fillStyle='#FFFFFF';rr(g,190,1260,700,96,48);g.fill();txt(g,d.sub,540,1324,44,'#0A0F0C',900);
+  txt(g,d.q,540,1440,56,'#FFD54A',900);txt(g,'>_ SECURITY.LOG',540,1560,34,'#8D97A6',900,MONO);
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
