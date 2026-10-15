@@ -16,7 +16,7 @@ def render(spec_path, out):
     files = []
     with sync_playwright() as p:
         b = p.chromium.launch()
-        page = b.new_page(viewport={"width": 1080, "height": 1350})
+        page = b.new_page(viewport={"width": 1080, "height": 1440})
         kst = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y-%m-%d")
         for i, s in enumerate(spec["slides"], 1):
             s.setdefault("date", kst)  # cover log-tag date in KST
