@@ -1580,7 +1580,7 @@ const ANIM={
   g.fillStyle='#1E2530';g.beginPath();g.arc(540,py+420,60,0,7);g.fill();txt(g,'📞',540,py+440,56,'#fff',700);
   const by=py+ph-150;g.fillStyle=RED;g.beginPath();g.arc(430,by,50,0,7);g.fill();g.fillStyle='#3BA776';g.beginPath();g.arc(650,by,50,0,7);g.fill();if(!d.clean){txt(g,'거절',430,by+90,26,'#C9D1DC',800);txt(g,'받기',650,by+90,26,'#C9D1DC',800)}g.restore();
   if(t>0.3){const q=ease((t-0.3)/0.4);g.globalAlpha=q;g.save();g.translate(0,(1-q)*30);withShadow(g,'rgba(0,0,0,.4)',20,8,()=>{g.fillStyle='#FFFFFF';rr(g,170,560,560,150,30);g.fill()});
-   g.beginPath();g.moveTo(640,700);g.lineTo(680,740);g.lineTo(680,700);g.fill();d.lure.forEach((l,i)=>txt(g,l,450,622+i*56,i?40:34,i?RED:'#1E2530',900));g.restore();g.globalAlpha=1}
+   d.lure.forEach((l,i)=>txt(g,l,450,622+i*56,i?40:34,i?RED:'#1E2530',900));g.restore();g.globalAlpha=1}
   if(t>1.9&&!d.clean){const u=ease((t-1.9)/0.25),sc=1.6-0.6*u;g.save();g.translate(540,h/2-40);g.rotate(-0.12);g.scale(sc,sc);g.globalAlpha=u;g.fillStyle=hx('#07090D',.55);rr(g,-330,-90,660,180,24);g.fill();g.strokeStyle=RED;g.lineWidth=12;rr(g,-330,-90,660,180,24);g.stroke();txt(g,d.stamp,0,38,104,RED,900);g.restore();g.globalAlpha=1}
  },
  jump(g,t,d,h){ // reel: sector chips light up (bank -> insurer NEW), then big counter from->to with multiplier badge
