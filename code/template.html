@@ -1602,6 +1602,14 @@ const ANIM={
    if(sent){const u=ease((t-1.8)/0.3);g.globalAlpha=u;g.fillStyle='#3BA776';rr(g,x-30,y+260,180,64,32);g.fill();txt(g,'✓ 보냄',x+60,y+304,32,'#fff',900);g.globalAlpha=1}});
   const by=h-190,u=ease((t-0.4)/0.4);g.globalAlpha=u;g.fillStyle='#1E2530';rr(g,190,by,700,120,60);g.fill();txt(g,d.btn,540,by+78,48,'#FFC83D',900);g.globalAlpha=1;
  },
+ callcover(g,t,d,h){ // 9:16 reel cover reusing the incall scene; headline kept inside the 3:4 grid crop (y 240..1680)
+  g.fillStyle='#07090D';g.fillRect(0,0,W,h);glow(g,540,700,600,'rgba(255,77,94,.16)');
+  g.save();g.translate(0,300);ANIM.incall(g,2.6,d.call,840);g.restore();
+  const f=g.createLinearGradient(0,1000,0,1140);f.addColorStop(0,'rgba(7,9,13,0)');f.addColorStop(1,'#07090D');g.fillStyle=f;g.fillRect(0,1000,W,140);
+  const f2=g.createLinearGradient(0,300,0,460);f2.addColorStop(0,'#07090D');f2.addColorStop(1,'rgba(7,9,13,0)');g.fillStyle=f2;g.fillRect(0,300,W,160);
+  txt(g,d.l1,540,1250,104,'#FFFFFF',900);withShadow(g,hx(RED,.7),40,0,()=>txt(g,d.big,540,1410,150,RED,900));
+  txt(g,d.q,540,1520,48,'#FFD54A',900);txt(g,'>_ SECURITY.LOG  ·  '+d.k,540,1620,30,'#8D97A6',900,MONO);
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
