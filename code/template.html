@@ -1610,6 +1610,18 @@ const ANIM={
   txt(g,d.l1,540,1290,100,'#FFFFFF',900);withShadow(g,hx(RED,.7),40,0,()=>txt(g,d.big,540,1460,160,RED,900));
   txt(g,'@security.log',540,1600,30,'#8D97A6',800,MONO);
  },
+ baitflood(g,t,d,h){ // reel twist: glitch hit, then scam notifications pile up (visual, no headline text)
+  g.fillStyle='#0B0E13';g.fillRect(0,0,W,h);if(t<0.5)for(let i=0;i<6;i++){g.fillStyle=hx(RED,.22);g.fillRect(0,rnd(i+t*10)*h,W,8+rnd(i)*20)}
+  d.m.forEach((m,i)=>{const t0=0.25+i*0.45;if(t<t0)return;const q=ease((t-t0)/0.3),y=110+i*165,sh=(t-t0<0.25)?(rnd(i+t*30)-0.5)*16:0;g.globalAlpha=q;g.save();g.translate(sh,(1-q)*-40);
+   withShadow(g,'rgba(0,0,0,.5)',24,8,()=>{g.fillStyle='#F4F6F9';rr(g,90,y,900,145,30);g.fill()});g.strokeStyle=RED;g.lineWidth=5;rr(g,90,y,900,145,30);g.stroke();
+   g.fillStyle=m[2]||'#3A4555';rr(g,120,y+30,64,64,16);g.fill();txt(g,m[3]||'✉',152,y+76,34,'#fff',900);
+   txt(g,m[0],210,y+58,30,'#1E2530',900,FONT,'left',560);txt(g,'지금',960,y+58,24,'#8A93A0',800,FONT,'right');txt(g,m[1],210,y+112,34,'#1E2530',800,FONT,'left',740);g.restore();g.globalAlpha=1});
+ },
+ threeslots(g,t,d,h){ // reel: preview of the three rules as icon tiles (no duplicated sentence)
+  bgPro(g,h);d.s.forEach((sl,i)=>{const t0=0.15+i*0.35,q=ease((t-t0)/0.35);if(q<=0)return;const x=60+i*330,y=170,sc_=0.7+0.3*q;g.save();g.translate(x+150,y+230);g.scale(sc_,sc_);g.translate(-150,-230);g.globalAlpha=q;
+   panel(g,0,0,300,460,36,sl[2]);g.fillStyle=hx(sl[2],.16);g.beginPath();g.arc(150,190,96,0,7);g.fill();txt(g,sl[0],150,226,96,'#fff',700);
+   g.fillStyle=sl[2];g.beginPath();g.arc(50,50,30,0,7);g.fill();txt(g,String(i+1),50,62,34,'#0B0E13',900,MONO);txt(g,sl[1],150,390,52,'#F2F4F7',900);g.restore();g.globalAlpha=1});
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
