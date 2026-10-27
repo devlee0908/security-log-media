@@ -1641,14 +1641,14 @@ function build(s,meta){
   const D=s.data,C=D.caps;
   draw=t=>{const g=ctx;g.fillStyle='#07090D';g.fillRect(0,0,W,1920);
    const sc=D.scenes.find(x=>t>=x.t0&&t<x.t1)||D.scenes[D.scenes.length-1],lt=t-sc.t0,hh=sc.h||740;off.height=hh;const og=off.getContext('2d');BGT=sc.theme?THEME[sc.theme]:null;
-   og.clearRect(0,0,W,hh);ANIM[sc.anim](og,lt,sc.data||{},hh);const k=Math.min(1,840/hh),dw=W*k,dh=hh*k,dy=490+(840-dh)/2;g.drawImage(off,0,0,W,hh,(W-dw)/2,dy,dw,dh);
+   og.clearRect(0,0,W,hh);ANIM[sc.anim](og,lt,sc.data||{},hh);const k=Math.min(1,980/hh),dw=W*k,dh=hh*k,dy=370+(980-dh)/2;g.drawImage(off,0,0,W,hh,(W-dw)/2,dy,dw,dh);
    const fade=g.createLinearGradient(0,dy+dh-160,0,dy+dh);fade.addColorStop(0,'rgba(7,9,13,0)');fade.addColorStop(1,'rgba(7,9,13,1)');g.fillStyle=fade;g.fillRect(0,dy+dh-160,W,160);
-   g.fillStyle='rgba(7,9,13,1)';g.fillRect(0,0,W,470);
-   // header: one centered pill (brand · category) + centered title
+   g.fillStyle='rgba(7,9,13,1)';g.fillRect(0,0,W,360);
+   // header: brand pill only (scene titles dropped: they repeated the captions)
    g.font=`900 28px ${MONO}`;const L1='>_ SECURITY.LOG',w1=g.measureText(L1).width,w2=g.measureText(D.tag).width,pw=w1+w2+90,px=540-pw/2;
    g.fillStyle='#121821';rr(g,px,266,pw,60,30);g.fill();g.strokeStyle='rgba(255,255,255,.12)';g.lineWidth=2;rr(g,px,266,pw,60,30);g.stroke();
    txt(g,L1,px+30,306,28,'#E9EDF2',900,MONO,'left');g.fillStyle='rgba(255,255,255,.25)';g.fillRect(px+30+w1+14,282,2,28);txt(g,D.tag,px+pw-30,306,28,ACC,900,MONO,'right');
-   const ti=sc.title||'';g.font=`900 80px ${FONT}`;const fs=Math.min(80,80*940/Math.max(1,g.measureText(ti).width));const q=ease(lt/0.35);g.globalAlpha=q;txt(g,ti,540,438+(1-q)*16,fs,'#FFFFFF',900,FONT,'center');g.globalAlpha=1;
+
    let cap=null;for(const c of C){if(c.t0<=t)cap=c}if(cap){const L=cap.text.split('\n');L.forEach((l,i)=>{const y=1490-(L.length-1-i)*84;g.font=`900 64px ${FONT}`;const fs=Math.min(64,64*840/g.measureText(l).width);g.font=`900 ${fs}px ${FONT}`;g.lineWidth=14;g.strokeStyle='#000';g.lineJoin='round';g.textAlign='center';g.strokeText(l,480,y);g.fillStyle='#FFF';g.fillText(l,480,y);g.textAlign='left'})}
    
   };
