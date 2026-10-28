@@ -1,13 +1,31 @@
 """Render a post spec (JSON) into carousel media: animated slides -> MP4, static -> JPG.
 Usage: python render.py post.json out_dir
 """
-import json, subprocess, sys, tempfile, datetime
+import json, subprocess, sys, tempfile, datetime, base64, io
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 from PIL import Image
 
 FPS, DUR = 30, 6  # 6s loops
 TEMPLATE = (Path(__file__).parent / "template.html").as_uri()
+
+
+def photo_url(path):
+    """photo file -> JPEG data URL (template is loaded from file://, keep it self-contained)."""
+    if path.startswith("data:"):
+        return path
+    im = Image.open(path).convert("RGB"); im.thumbnail((1200, 2100)); b = io.BytesIO(); im.save(b, "JPEG", quality=90)
+    return "data:image/jpeg;base64," + base64.b64encode(b.getvalue()).decode()
+
+
+def setup_slide(page, s, meta):
+    if s.get("photo"):
+        s = {**s, "photo": photo_url(s["photo"])}
+    page.goto(TEMPLATE)
+    page.evaluate("([s,m]) => setup(s,m)", [s, meta])
+    if s["type"] == "photocover":
+        page.wait_for_function("document.querySelector('.pcover img').complete")
+    page.evaluate("document.fonts.ready")
 
 
 def render(spec_path, out):
@@ -20,9 +38,7 @@ def render(spec_path, out):
         kst = (datetime.datetime.utcnow() + datetime.timedelta(hours=9)).strftime("%Y-%m-%d")
         for i, s in enumerate(spec["slides"], 1):
             s.setdefault("date", kst)  # cover log-tag date in KST
-            page.goto(TEMPLATE)
-            page.evaluate("([s,m]) => setup(s,m)", [s, spec["meta"]])
-            page.evaluate("document.fonts.ready")
+            setup_slide(page, s, spec["meta"])
             if s["type"] in ("cover", "content"):
                 with tempfile.TemporaryDirectory() as tmp:
                     # cover: open on the finished scene so the IG grid thumbnail (frame 0) isn't blank,
@@ -55,5 +71,16 @@ def render(spec_path, out):
     (out / "manifest.json").write_text(json.dumps({"media": files, "caption": spec["caption"]}, ensure_ascii=False, indent=2))
 
 
+def reel_cover(photo, cat, kicker, title, out):
+    """9:16 reel cover in the photo-cover style; text sits inside the 3:4 grid crop."""
+    with sync_playwright() as p:
+        b = p.chromium.launch(); page = b.new_page(viewport={"width": 1080, "height": 1920})
+        setup_slide(page, {"type": "photocover", "tall": True, "cat": cat, "kicker": kicker, "title": title, "photo": photo}, {})
+        page.screenshot(path=out, type="jpeg", quality=92); b.close()
+
+
 if __name__ == "__main__":
-    render(sys.argv[1], sys.argv[2])
+    if sys.argv[1] == "reelcover":  # python render.py reelcover photo.png CAT "kicker" "title" out.jpg
+        reel_cover(*sys.argv[2:7])
+    else:
+        render(sys.argv[1], sys.argv[2])

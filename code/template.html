@@ -33,6 +33,15 @@ canvas{position:absolute;left:0;top:0}
 .sum li span{position:absolute;left:0;top:26px;width:44px;height:44px;border-radius:12px;background:var(--bg);color:var(--acc);font-weight:900;font-size:26px;display:flex;align-items:center;justify-content:center}
 .src{font-size:28px;color:#7A818B;line-height:1.6}
 .btn{display:inline-block;background:#0A84FF;color:#fff;font-weight:700;border-radius:18px}
+.pcover{background:#07090D;color:#fff}
+.pcover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pshade{position:absolute;left:0;right:0;bottom:0;height:62%;background:linear-gradient(rgba(7,9,13,0),rgba(7,9,13,.78) 45%,rgba(7,9,13,.96))}
+.pkick{position:absolute;left:64px;bottom:330px;font-size:30px;font-weight:800;color:#C9D1DC;letter-spacing:-.3px;display:flex;align-items:center;gap:16px}
+.pkick i{display:inline-block;width:6px;height:32px;border-radius:3px}
+.pcover h1{position:absolute;left:64px;right:64px;bottom:130px;font-size:84px;font-weight:900;line-height:1.2;letter-spacing:-2px;white-space:pre-line;word-break:keep-all}
+.pcover h1 b{color:var(--cat)}
+.pcover.tall .pkick{bottom:530px}.pcover.tall h1{bottom:330px}.pcover.tall .plogo{bottom:260px}
+.plogo{position:absolute;left:0;right:0;bottom:52px;text-align:center;font-weight:900;font-size:26px;letter-spacing:6px;color:rgba(255,255,255,.85)}
 </style></head>
 <body><div id="slide"></div>
 <script>
@@ -1652,6 +1661,10 @@ function build(s,meta){
   ctx=mkCanvas(1440);
   el.insertAdjacentHTML('beforeend',`<div class="shade"></div><div class="tag">${logTag(s)}</div><h1>${hl(s.title)}</h1><div class="logo">${meta.logo}</div>`);
   draw=t=>ANIM[s.anim](ctx,t,s.data||{},1440);
+ } else if(s.type==='photocover'){ // magazine-style cover: full-bleed photo + bottom shade + kicker + 2-line title
+  const cc=(s.cat||'NEWS').toUpperCase();el.className='pcover'+(s.tall?' tall':'');el.style.height=s.tall?'1920px':'';el.style.setProperty('--cat',CAT[cc]||ACC);
+  el.innerHTML=`<img src="${s.photo}"><div class="pshade"></div><div class="pkick"><i style="background:${CAT[cc]||ACC}"></i>${s.kicker}</div><h1>${hl(s.title)}</h1><div class="plogo">SECURITY.LOG</div>`;
+  draw=()=>{};
  } else if(s.type==='content'){
   el.insertAdjacentHTML('beforeend',`<div class="media"></div><div class="badge">${s.n}</div><div class="text"><h1>${s.title}</h1><p>${hl(s.body)}</p></div>`);
   ctx=mkCanvas(MH);ctx.canvas.style.top='62px';if(s.data&&s.data.light)el.querySelector('.media').style.background='#EFE8DA';

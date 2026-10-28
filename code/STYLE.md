@@ -69,3 +69,13 @@
 - 장면 박스 y270~1330. 좌우 여백 있는 장면은 scene.z(1.08~1.26)로 확대. 자막·워터마크는 화면 가운데(x540) 정렬, 자막 폭 820px 이내(오른쪽 아이콘 피함). 워터마크 y1550.
 - 릴스 표지는 주제별로 새로: 그림 하나 + 메시지 하나. 작은 글씨·중복 문구(도장+제목 등) 금지. 3:4 크롭(y240~1680) 안.
 - 장면 속 글자가 자막과 같은 말이면 안 된다(글자만 있는 장면 금지). 반전·전환 구간도 그림으로: 예) 사칭 알림이 쏟아지는 화면(baitflood), 세 가지 미리보기 아이콘 카드(threeslots).
+
+## 표지: 사진 매거진 스타일 (2026-10-28 확정)
+- 캐러셀·릴스 표지 모두 `photocover`: 실사풍 사진 전면 + 아래 62% 어두운 그라데이션 + 분류 한 줄(카테고리 색 막대) + 2줄 제목([ ]=카테고리색 강조) + SECURITY.LOG.
+  - 캐러셀: posts JSON 첫 장 `{"type":"photocover","cat":"NEWS","kicker":"보안 뉴스 · 금융권","title":"...\n...","photo":"covers/xxx.png"}` (render.py가 data URL로 변환, 정적 JPG).
+  - 릴스: `python render.py reelcover photo.png CAT "kicker" "title" out.jpg` (1080x1920, 글자는 3:4 크롭 안).
+- 안쪽 장(내용 슬라이드)은 기존 그래픽 유지.
+- 사진 생성: Higgsfield MCP `z_image`(무료 플랜, 3:4, 장당 0.25크레딧) → 결과 URL(d8j0ntlcm91z4.cloudfront.net, 허용됨)을 curl로 covers/에 저장. Gemini 무료 키는 이미지 한도 0.
+  - 프롬프트: "Photorealistic editorial news photograph … 35mm … Darker lower third … no readable text, no logos, no faces".
+  - **사진마다 엉터리 글자·간판·로고 확인 필수**(10/28 은행 사진 "맴자아연" 간판 → 재생성). 실존 인물·실제 회사 로고 금지, 가짜 사고 현장처럼 실제 사진으로 오해될 장면 금지.
+  - 게시물마다 사진 장면이 달라야 그리드에서 구분됨.
