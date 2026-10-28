@@ -1,5 +1,5 @@
 """Generate a background image with the Gemini API.
-Usage: python gen_image.py "<scene description>" out.png [--ratio 4:5|1:1|16:9]
+Usage: python gen_image.py "<scene description>" out.png [--ratio 3:4|4:5|1:1|9:16] [--photo]
 Key: ~/.secrets/gemini_key   Model: env GEMINI_IMAGE_MODEL (falls back through MODELS)
 Exit code 1 on failure -> caller should fall back to a code-drawn scene.
 """
@@ -10,6 +10,9 @@ MODELS = [os.environ.get("GEMINI_IMAGE_MODEL"), "gemini-3.1-flash-image", "gemin
 GUARD = ("Dark cinematic editorial illustration for a cybersecurity news card. Deep dark background, "
          "subtle neon accent lighting, lots of empty dark space in the lower 40% for text overlay. "
          "STRICTLY NO text, letters, numbers, logos, brand marks, flags or real human faces. Scene: ")
+PHOTO = ("Photorealistic editorial news photograph, natural believable lighting, shallow depth of field, 35mm, "
+         "muted realistic colors, darker lower third for headline overlay. STRICTLY NO readable text, letters, numbers, "
+         "logos, brand marks, or identifiable human faces (people only from behind, hands, or out of focus). Scene: ")
 API = "https://generativelanguage.googleapis.com/v1beta/models/"
 
 
@@ -34,11 +37,13 @@ def call(model, prompt, ratio, key):
 def main():
     args = sys.argv[1:]
     ratio = args[args.index("--ratio") + 1] if "--ratio" in args else "4:5"
+    guard = PHOTO if "--photo" in args else GUARD
     scene, out = args[0], args[1]
     key = open(os.path.expanduser("~/.secrets/gemini_key")).read().strip()
     for m in filter(None, dict.fromkeys(MODELS)):
         try:
-            open(out, "wb").write(call(m, GUARD + scene, ratio, key))
+            img = call(m, guard + scene, ratio, key)
+            open(out, "wb").write(img)
             print("ok", m, out); return
         except (urllib.error.HTTPError, urllib.error.URLError, KeyError, IndexError, ValueError) as e:
             print("fail", m, getattr(e, "code", ""), str(e)[:120], file=sys.stderr)
