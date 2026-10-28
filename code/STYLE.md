@@ -71,7 +71,7 @@
 - 장면 속 글자가 자막과 같은 말이면 안 된다(글자만 있는 장면 금지). 반전·전환 구간도 그림으로: 예) 사칭 알림이 쏟아지는 화면(baitflood), 세 가지 미리보기 아이콘 카드(threeslots).
 
 ## 표지: 사진 매거진 스타일 (2026-10-28 확정)
-- 캐러셀·릴스 표지 모두 `photocover`: 실사풍 사진 전면 + 아래 62% 어두운 그라데이션 + 분류 한 줄(카테고리 색 막대) + 2줄 제목([ ]=카테고리색 강조) + SECURITY.LOG.
+- 캐러셀·릴스 표지 모두 `photocover`: 실사풍 사진 전면 + 아래 62% 어두운 그라데이션 + 분류 한 줄(카테고리 색 막대) + 2줄 제목([ ]=카테고리색 강조) + SECURITY.LOG(점은 초록, meta.logo 사용).
   - 캐러셀: posts JSON 첫 장 `{"type":"photocover","cat":"NEWS","kicker":"보안 뉴스 · 금융권","title":"...\n...","photo":"covers/xxx.png"}` (render.py가 data URL로 변환, 정적 JPG).
   - 릴스: `python render.py reelcover photo.png CAT "kicker" "title" out.jpg` (1080x1920, 글자는 3:4 크롭 안).
 - 안쪽 장(내용 슬라이드)은 기존 그래픽 유지.
