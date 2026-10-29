@@ -1683,6 +1683,64 @@ const ANIM={
    g.fillStyle=hx(c[3],.15);g.beginPath();g.arc(x+150,y+170,90,0,7);g.fill();txt(g,c[0],x+150,y+205,90,'#fff',700);g.fillStyle=c[3];g.beginPath();g.arc(x+44,y+44,26,0,7);g.fill();txt(g,String(i+1),x+44,y+55,30,'#0B0E13',900,MONO);
    c[1].split('\n').forEach((l,k)=>txt(g,l,x+150,y+340+k*50,38,'#F2F4F7',900));txt(g,c[2],x+150,y+480,24,'#8D97A6',800,FONT,'center',270);g.restore();g.globalAlpha=1});
  },
+ twocount(g,t,d,h){ // dark: two victim counters + incident timeline strip
+  bgPro(g,h);d.c.forEach((c,i)=>{const x=110+i*440,q=ease(clamp((t-0.3-i*0.4)/1.3)),v=Math.round(c[1]*q);panel(g,x,80,420,330,30,c[3]);
+   txt(g,c[0],x+210,160,34,'#C9D1DC',900);numUnit(g,v.toLocaleString(),'명',x+210,300,120,c[3],'#E9EDF2');txt(g,c[2],x+210,370,26,'#8D97A6',800)});
+  const tl=ease(clamp((t-1.6)/1.2));g.fillStyle='#2A3442';rr(g,150,540,780,10,5);g.fill();g.fillStyle=RED;rr(g,150,540,780*tl,10,5);g.fill();
+  d.tl.forEach((e,i)=>{const x=150+i*780,on=tl>=i;g.fillStyle=on?RED:'#3A4555';g.beginPath();g.arc(x,545,18,0,7);g.fill();txt(g,e[0],x,610,34,'#F2F4F7',900,MONO);txt(g,e[1],x,655,26,'#8D97A6',800)});
+ },
+ drmsplit(g,t,d,h){ // light: 100 cells = related customers; most get DRM locks, a slice stays exposed (red)
+  lightBg(g,h);const n=100,cols=10,cs=52,x0=90,y0=120,red=Math.round(n*d.exp/d.total);
+  for(let i=0;i<n;i++){const c=i%cols,r=Math.floor(i/cols),x=x0+c*cs,y=y0+r*cs,on=t>0.2+i*0.008,lock=t>1.6&&i>=red;if(!on)continue;
+   g.fillStyle=lock?'#C9C1B0':(t>1.6?RED:'#8A93A0');rr(g,x,y,cs-8,cs-8,10);g.fill();if(lock){txt(g,'🔒',x+(cs-8)/2,y+32,22,'#fff',700)}}
+  txt(g,d.l0,x0,90,30,'#1E2530',900,FONT,'left');
+  const R=(y,label,num,col,t0)=>{if(t<t0)return;const q=ease((t-t0)/0.4);g.globalAlpha=q;txt(g,label,820,y,30,'#4A5563',800);numUnit(g,num,'명',820,y+84,80,col,'#4A5563');g.globalAlpha=1};
+  R(150,d.l1,d.total.toLocaleString(),'#1E2530',0.6);R(330,d.l2,(d.total-d.exp).toLocaleString(),'#8A806C',1.8);R(510,d.l3,d.exp.toLocaleString(),RED,2.4);
+  if(t>2.8){g.globalAlpha=ease((t-2.8)/0.4);txt(g,d.note,540,700,24,'#7A818B',800);g.globalAlpha=1}
+ },
+ seven(g,t,d,h){ // dark: leaked item tiles pop in; ID copy tile is the big red one
+  bgPro(g,h);d.items.forEach((it,i)=>{const t0=0.2+i*0.25,q=ease((t-t0)/0.35);if(q<=0)return;const big=i===d.items.length-1;
+   const x=big?640:90+(i%2)*260,y=big?110:70+Math.floor(i/2)*160,w=big?360:230,hh=big?480:130;g.globalAlpha=q;g.save();g.translate(x+w/2,y+hh/2);g.scale(0.8+0.2*q,0.8+0.2*q);g.translate(-x-w/2,-y-hh/2);
+   panel(g,x,y,w,hh,24,big?RED:'#5A6575');if(big){g.fillStyle='#E9EDF2';rr(g,x+40,y+60,280,180,16);g.fill();g.fillStyle='#8A93A0';rr(g,x+60,y+80,80,100,10);g.fill();for(let k=0;k<3;k++){g.fillStyle='#B8C0CC';rr(g,x+160,y+90+k*34,140,14,7);g.fill()}
+    txt(g,it,x+w/2,y+320,44,RED,900);txt(g,d.bigsub,x+w/2,y+380,26,'#C9D1DC',800)}else txt(g,it,x+w/2,y+hh/2+12,32,'#E9EDF2',900);g.restore();g.globalAlpha=1});
+  if(t>2.4){g.globalAlpha=ease((t-2.4)/0.4);txt(g,d.note,330,690,24,'#8D97A6',800);g.globalAlpha=1}
+ },
+ door59(g,t,d,h){ // light: intrusion window timer 11:28→12:27 on groupware; separate vault (assets) stays green
+  lightBg(g,h);withShadow(g,'rgba(40,30,10,.18)',24,10,()=>{g.fillStyle='#1E2530';rr(g,80,70,560,380,28);g.fill()});
+  txt(g,d.sys,360,140,32,'#E9EDF2',900);const q=clamp((t-0.4)/2.2),m=Math.round(59*q),hh=11+Math.floor((28+m)/60),mm=(28+m)%60;
+  txt(g,`${hh}:${String(mm).padStart(2,'0')}`,360,280,110,RED,900,MONO);g.fillStyle='#2A3442';rr(g,130,330,460,24,12);g.fill();g.fillStyle=RED;rr(g,130,330,460*q,24,12);g.fill();
+  txt(g,d.from,130,400,26,'#8D97A6',800,MONO,'left');txt(g,d.to,590,400,26,'#8D97A6',800,MONO,'right');
+  if(q>=1){txt(g,`${d.dur}`,360,520,52,'#1E2530',900)}
+  withShadow(g,'rgba(40,30,10,.18)',24,10,()=>{g.fillStyle='#fff';rr(g,720,110,290,340,28);g.fill()});g.strokeStyle='#2E8A5F';g.lineWidth=6;rr(g,720,110,290,340,28);g.stroke();
+  g.strokeStyle='#2E8A5F';g.lineWidth=10;g.beginPath();g.arc(865,240,60,0,7);g.stroke();g.beginPath();g.moveTo(865,240);g.lineTo(865+40*Math.cos(t*2),240+40*Math.sin(t*2));g.stroke();
+  txt(g,d.vault,865,370,30,'#1E2530',900);txt(g,d.vsub,865,415,24,'#2E8A5F',900);
+  g.strokeStyle='#C9C1B0';g.lineWidth=4;g.setLineDash([12,10]);g.beginPath();g.moveTo(680,70);g.lineTo(680,640);g.stroke();g.setLineDash([]);txt(g,d.note,540,640,26,'#7A818B',800);
+ },
+ idmisuse(g,t,d,h){ // dark: ID copy + resident number combine, then branch to misuse targets
+  bgPro(g,h);const q=ease(clamp((t-0.3)/0.8));
+  g.save();g.translate(90+60*q,150);g.fillStyle='#E9EDF2';rr(g,0,0,300,190,18);g.fill();g.fillStyle='#8A93A0';rr(g,20,30,80,110,10);g.fill();for(let k=0;k<3;k++){g.fillStyle='#B8C0CC';rr(g,120,40+k*36,150,14,7);g.fill()}g.restore();
+  txt(g,d.a,240+60*q,380,30,'#C9D1DC',900);txt(g,'+',300,470,60,'#FFC83D',900);
+  g.save();g.translate(90+60*q,500);g.fillStyle='#232B37';rr(g,0,0,300,110,18);g.fill();txt(g,'●●●●●●-●●●●●●●',150,68,30,'#E9EDF2',900,MONO);g.restore();txt(g,d.b,240+60*q,650,30,'#C9D1DC',900);
+  d.t.forEach((x_,i)=>{const t0=1.4+i*0.45;if(t<t0)return;const u=ease((t-t0)/0.4),y=130+i*190;g.strokeStyle=hx(RED,.7);g.lineWidth=5;g.setLineDash([12,8]);g.beginPath();g.moveTo(470,380);g.lineTo(470+(600-470)*u,y+60);g.stroke();g.setLineDash([]);
+   g.globalAlpha=u;panel(g,610,y,400,120,24,RED);txt(g,x_[0],660,y+76,50,'#fff',700,FONT,'left');txt(g,x_[1],740,y+76,34,'#F2F4F7',900,FONT,'left');g.globalAlpha=1});
+  if(t>3){g.globalAlpha=ease((t-3)/0.4);txt(g,d.note,810,700,26,'#FFB3BB',900);g.globalAlpha=1}
+ },
+ jinair(g,t,d,h){ // light: plane + counter, leaked chips (red), safe chips (green), side note on other airlines
+  lightBg(g,h);const px=80+ease(clamp(t/1.2))*120;g.save();g.translate(px,150);g.fillStyle='#1E2530';g.beginPath();g.moveTo(0,40);g.lineTo(220,30);g.quadraticCurveTo(260,40,220,50);g.lineTo(0,40);g.fill();
+  g.beginPath();g.moveTo(100,38);g.lineTo(60,-30);g.lineTo(90,-30);g.lineTo(150,36);g.fill();g.beginPath();g.moveTo(100,42);g.lineTo(60,110);g.lineTo(90,110);g.lineTo(150,44);g.fill();g.beginPath();g.moveTo(10,40);g.lineTo(-10,0);g.lineTo(10,0);g.lineTo(40,38);g.fill();g.restore();
+  const v=Math.round(d.n*ease(clamp((t-0.3)/1.3)));numUnit(g,v.toLocaleString(),'명',770,190,110,RED,'#1E2530');txt(g,d.nsub,770,245,28,'#4A5563',800);
+  const chip=(arr,y,col,bg,t0)=>{let x=80;arr.forEach((c,i)=>{if(t<t0+i*0.15)return;g.font=`900 26px ${FONT}`;const w=g.measureText(c).width+44;if(x+w>1010){x=80;y+=66}g.fillStyle=bg;rr(g,x,y,w,52,26);g.fill();txt(g,c,x+22,y+36,26,col,900,FONT,'left');x+=w+12})};
+  txt(g,d.l1,80,330,28,'#1E2530',900,FONT,'left');chip(d.leak,350,'#fff',RED,1.2);txt(g,d.l2,80,520,28,'#1E2530',900,FONT,'left');chip(d.safe,540,'#fff','#3BA776',2.4);
+  if(t>3){g.globalAlpha=ease((t-3)/0.4);txt(g,d.note,540,680,24,'#7A818B',800);g.globalAlpha=1}
+ },
+ blocklist(g,t,d,h){ // dark: phone settings list, three protections switch ON; scam warning chip + hotline
+  bgPro(g,h);const px=90,py=50,pw=520,ph=640;withShadow(g,'rgba(0,0,0,.5)',30,12,()=>{g.fillStyle='#232B37';rr(g,px,py,pw,ph,44);g.fill()});g.fillStyle='#0E1218';rr(g,px+14,py+14,pw-28,ph-28,32);g.fill();
+  txt(g,d.head,px+pw/2,py+90,30,'#E9EDF2',900);d.rows.forEach((r,i)=>{const y=py+140+i*150,on=ease((t-0.6-i*0.6)/0.35);g.fillStyle='#1A212B';rr(g,px+40,y,pw-80,120,22);g.fill();
+   txt(g,String(i+1),px+80,y+72,34,'#2BFF88',900,MONO);txt(g,r[0],px+120,y+56,30,'#F2F4F7',900,FONT,'left',215);txt(g,r[1],px+120,y+96,24,'#8D97A6',800,FONT,'left',215);
+   const tx=px+pw-170;g.fillStyle=on>0.5?'#3BA776':'#3A4555';rr(g,tx,y+32,100,56,28);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(tx+28+44*on,y+60,22,0,7);g.fill()});
+  if(t>2.6){const u=ease((t-2.6)/0.4);g.globalAlpha=u;panel(g,660,170,350,220,26,RED);txt(g,'⚠',835,250,56,'#FF4D5E',700);d.warn.forEach((l,i)=>txt(g,l,835,310+i*44,30,'#F2F4F7',900));
+   panel(g,660,430,350,150,26,'#5AB0FF');txt(g,d.call[0],835,490,26,'#C9D1DC',800);txt(g,d.call[1],835,545,44,'#5AB0FF',900,MONO);g.globalAlpha=1}
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
