@@ -71,16 +71,16 @@ def render(spec_path, out):
     (out / "manifest.json").write_text(json.dumps({"media": files, "caption": spec["caption"]}, ensure_ascii=False, indent=2))
 
 
-def reel_cover(photo, cat, kicker, title, out):
+def reel_cover(photo, cat, kicker, title, out, tone=""):
     """9:16 reel cover in the photo-cover style; text sits inside the 3:4 grid crop."""
     with sync_playwright() as p:
         b = p.chromium.launch(); page = b.new_page(viewport={"width": 1080, "height": 1920})
-        setup_slide(page, {"type": "photocover", "tall": True, "cat": cat, "kicker": kicker, "title": title, "photo": photo}, {})
+        setup_slide(page, {"type": "photocover", "tall": True, "tone": tone, "cat": cat, "kicker": kicker, "title": title, "photo": photo}, {})
         page.screenshot(path=out, type="jpeg", quality=92); b.close()
 
 
 if __name__ == "__main__":
     if sys.argv[1] == "reelcover":  # python render.py reelcover photo.png CAT "kicker" "title" out.jpg
-        reel_cover(*sys.argv[2:7])
+        reel_cover(*sys.argv[2:8])  # optional 7th arg: bright
     else:
         render(sys.argv[1], sys.argv[2])
