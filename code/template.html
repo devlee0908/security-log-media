@@ -49,6 +49,8 @@ canvas{position:absolute;left:0;top:0}
 .pcover.light h1 b{color:var(--cat-ink)}
 .pcover.light .plogo{color:#14181F}
 .pcover.light .pcap{position:absolute;right:72px;top:772px;font-size:22px;color:#8A806C;font-weight:700}
+.pcover.bright .pshade{height:64%;background:linear-gradient(rgba(12,18,32,0),rgba(12,18,32,.8) 40%,rgba(12,18,32,.95))}
+.pcover.bright h1,.pcover.bright .pkick{text-shadow:0 2px 16px rgba(0,0,0,.35)}
 .plogo i{font-style:normal;color:var(--acc)}
 .plogo{position:absolute;left:0;right:0;bottom:70px;text-align:center;font-weight:900;font-size:26px;letter-spacing:6px;color:rgba(255,255,255,.85)}
 </style></head>
@@ -1780,7 +1782,7 @@ function build(s,meta){
   el.insertAdjacentHTML('beforeend',`<div class="shade"></div><div class="tag">${logTag(s)}</div><h1>${hl(s.title)}</h1><div class="logo">${meta.logo}</div>`);
   draw=t=>ANIM[s.anim](ctx,t,s.data||{},1440);
  } else if(s.type==='photocover'){ // magazine-style cover: full-bleed photo + bottom shade + kicker + 2-line title
-  const cc=(s.cat||'NEWS').toUpperCase();el.className='pcover'+(s.tall?' tall':'')+(s.light?' light':'');el.style.setProperty('--cat-ink',({NEWS:'#00A060',CVE:'#E0303F',TREND:'#E0701F',TIPS:'#C99400',WEEKLY:'#2F80D8',WORDS:'#7A4FE0'})[(s.cat||'NEWS').toUpperCase()]||'#00A060');el.style.height=s.tall?'1920px':'';el.style.setProperty('--cat',CAT[cc]||ACC);
+  const cc=(s.cat||'NEWS').toUpperCase();el.className='pcover'+(s.tall?' tall':'')+(s.light?' light':'')+(s.tone==='bright'?' bright':'');el.style.setProperty('--cat-ink',({NEWS:'#00A060',CVE:'#E0303F',TREND:'#E0701F',TIPS:'#C99400',WEEKLY:'#2F80D8',WORDS:'#7A4FE0'})[(s.cat||'NEWS').toUpperCase()]||'#00A060');el.style.height=s.tall?'1920px':'';el.style.setProperty('--cat',CAT[cc]||ACC);
   el.innerHTML=`<img src="${s.photo}"><div class="pshade"></div>${s.credit?`<div class="pcap">${s.credit}</div>`:''}<div class="pkick"><i style="background:${CAT[cc]||ACC}"></i>${s.kicker}</div><h1>${hl(s.title)}</h1><div class="plogo">${(meta&&meta.logo)||'SECURITY<i>.</i>LOG'}</div>`;
   draw=()=>{};
  } else if(s.type==='content'){
