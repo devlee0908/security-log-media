@@ -41,6 +41,14 @@ canvas{position:absolute;left:0;top:0}
 .pcover h1{position:absolute;left:64px;right:64px;bottom:320px;font-size:88px;font-weight:900;line-height:1.2;letter-spacing:-2px;white-space:pre-line;word-break:keep-all}
 .pcover h1 b{color:var(--cat)}
 .pcover.tall .pkick{bottom:802px}.pcover.tall h1{bottom:560px}.pcover.tall .plogo{bottom:310px}
+.pcover.light{background:#F3F0EA;color:#14181F}
+.pcover.light img{inset:auto;left:56px;top:56px;width:968px;height:700px;border-radius:28px;box-shadow:0 18px 48px rgba(30,25,15,.22)}
+.pcover.light .pshade{display:none}
+.pcover.light .pkick{color:#4A5563}
+.pcover.light h1{color:#14181F}
+.pcover.light h1 b{color:var(--cat-ink)}
+.pcover.light .plogo{color:#14181F}
+.pcover.light .pcap{position:absolute;right:72px;top:772px;font-size:22px;color:#8A806C;font-weight:700}
 .plogo i{font-style:normal;color:var(--acc)}
 .plogo{position:absolute;left:0;right:0;bottom:70px;text-align:center;font-weight:900;font-size:26px;letter-spacing:6px;color:rgba(255,255,255,.85)}
 </style></head>
@@ -1772,8 +1780,8 @@ function build(s,meta){
   el.insertAdjacentHTML('beforeend',`<div class="shade"></div><div class="tag">${logTag(s)}</div><h1>${hl(s.title)}</h1><div class="logo">${meta.logo}</div>`);
   draw=t=>ANIM[s.anim](ctx,t,s.data||{},1440);
  } else if(s.type==='photocover'){ // magazine-style cover: full-bleed photo + bottom shade + kicker + 2-line title
-  const cc=(s.cat||'NEWS').toUpperCase();el.className='pcover'+(s.tall?' tall':'');el.style.height=s.tall?'1920px':'';el.style.setProperty('--cat',CAT[cc]||ACC);
-  el.innerHTML=`<img src="${s.photo}"><div class="pshade"></div><div class="pkick"><i style="background:${CAT[cc]||ACC}"></i>${s.kicker}</div><h1>${hl(s.title)}</h1><div class="plogo">${(meta&&meta.logo)||'SECURITY<i>.</i>LOG'}</div>`;
+  const cc=(s.cat||'NEWS').toUpperCase();el.className='pcover'+(s.tall?' tall':'')+(s.light?' light':'');el.style.setProperty('--cat-ink',({NEWS:'#00A060',CVE:'#E0303F',TREND:'#E0701F',TIPS:'#C99400',WEEKLY:'#2F80D8',WORDS:'#7A4FE0'})[(s.cat||'NEWS').toUpperCase()]||'#00A060');el.style.height=s.tall?'1920px':'';el.style.setProperty('--cat',CAT[cc]||ACC);
+  el.innerHTML=`<img src="${s.photo}"><div class="pshade"></div>${s.credit?`<div class="pcap">${s.credit}</div>`:''}<div class="pkick"><i style="background:${CAT[cc]||ACC}"></i>${s.kicker}</div><h1>${hl(s.title)}</h1><div class="plogo">${(meta&&meta.logo)||'SECURITY<i>.</i>LOG'}</div>`;
   draw=()=>{};
  } else if(s.type==='content'){
   el.insertAdjacentHTML('beforeend',`<div class="media"></div><div class="badge">${s.n}</div><div class="text"><h1>${s.title}</h1><p>${hl(s.body)}</p></div>`);
