@@ -1801,6 +1801,39 @@ const ANIM={
    withShadow(g,'rgba(40,30,10,.12)',18,6,()=>{g.fillStyle='#fff';rr(g,80,y,920,96,22);g.fill()});txt(g,'👁',130,y+64,40,'#1E2530',700);txt(g,it[0],180,y+60,34,'#1E2530',900,FONT,'left',520);txt(g,it[1],970,y+60,26,'#7A818B',800,FONT,'right',260);g.globalAlpha=1});
   if(t>1.8){const u=ease((t-1.8)/0.4);g.globalAlpha=u;g.fillStyle='#1E2530';rr(g,80,540,920,150,28);g.fill();txt(g,d.k,540,595,28,'#FFC83D',900);txt(g,d.line,540,650,36,'#F2F4F7',900,FONT,'center',860);g.globalAlpha=1}
  },
+ idlock(g,t,d,h){ // reel hook: ID copy drifts away (leak), then a big padlock slams onto 'my name'
+  bgPro(g,h);const lk=t>1.6,u=ease((t-1.6)/0.25);const dx=lk?0:Math.sin(t*3)*20+t*30;
+  g.save();g.translate(260+dx,180);g.globalAlpha=lk?0.35:1;g.fillStyle='#E9EDF2';rr(g,0,0,420,260,24);g.fill();g.fillStyle='#8A93A0';rr(g,30,40,110,150,12);g.fill();for(let k=0;k<3;k++){g.fillStyle='#B8C0CC';rr(g,170,60+k*50,210,18,9);g.fill()}txt(g,d.copy,210,235,30,'#1E2530',900);g.restore();g.globalAlpha=1;
+  if(lk){g.save();g.translate(540,500);g.scale(1.6-0.6*u,1.6-0.6*u);g.globalAlpha=u;g.fillStyle='#2BFF88';rr(g,-120,-60,240,190,30);g.fill();g.strokeStyle='#2BFF88';g.lineWidth=30;g.beginPath();g.arc(0,-60,80,Math.PI,0);g.stroke();g.fillStyle='#0B0E13';g.beginPath();g.arc(0,20,22,0,7);g.fill();g.fillRect(-8,20,16,50);g.restore();g.globalAlpha=1;
+   txt(g,d.name,540,680,44,'#2BFF88',900)}
+ },
+ loanlock(g,t,d,h){ // reel tip 1: finance products get locked one by one; branch counter chip
+  bgPro(g,h);d.items.forEach((it,i)=>{const x=80+(i%2)*470,y=60+Math.floor(i/2)*200,t0=0.4+i*0.35,on=t>t0,u=ease((t-t0)/0.3);panel(g,x,y,450,170,26,on?'#2BFF88':'#3A4555');
+   txt(g,it[0],x+70,y+110,64,'#fff',700);txt(g,it[1],x+150,y+100,40,on?'#F2F4F7':'#8D97A6',900,FONT,'left');if(on){g.globalAlpha=u;txt(g,'🔒',x+390,y+105,52,'#fff',700);g.globalAlpha=1}});
+  if(t>2.2){g.globalAlpha=ease((t-2.2)/0.4);g.fillStyle='#1E2530';rr(g,190,500,700,100,50);g.fill();txt(g,d.where,540,565,40,'#FFC83D',900);g.globalAlpha=1}
+ },
+ acctlock(g,t,d,h){ // reel tip 2: bank-app screen; toggle on -> '계좌 개설' button greys out with lock
+  bgPro(g,h);const px=300,py=20,pw=480,ph=780;withShadow(g,'rgba(0,0,0,.5)',30,12,()=>{g.fillStyle='#232B37';rr(g,px,py,pw,ph,50);g.fill()});g.fillStyle='#F4F6F9';rr(g,px+16,py+16,pw-32,ph-32,38);g.fill();
+  txt(g,d.app,540,py+100,34,'#1E2530',900);const on=ease((t-0.8)/0.35);g.fillStyle='#fff';rr(g,px+50,py+170,pw-100,140,24);g.fill();txt(g,d.opt,px+80,py+235,30,'#1E2530',900,FONT,'left',205);txt(g,d.optsub,px+80,py+278,24,'#7A818B',800,FONT,'left',205);
+  const tx=px+pw-170;g.fillStyle=on>0.5?'#3BA776':'#C9C1B0';rr(g,tx,py+210,110,60,30);g.fill();g.fillStyle='#fff';g.beginPath();g.arc(tx+30+50*on,py+240,24,0,7);g.fill();
+  const off=on>0.9;g.fillStyle=off?'#C9C1B0':'#1F6FEB';rr(g,px+50,py+400,pw-100,110,55);g.fill();txt(g,(off?'🔒 ':'')+d.btn,540,py+470,38,'#fff',900);if(off){txt(g,d.blocked,540,py+580,30,'#E0303F',900)}
+ },
+ unlockfail(g,t,d,h){ // reel twist: scammer tries to unlock in app -> refused; only branch visit with ID unlocks
+  bgPro(g,h);g.fillStyle='#232B37';rr(g,90,60,380,620,44);g.fill();g.fillStyle='#0E1218';rr(g,104,74,352,592,34);g.fill();txt(g,'🕵️',280,200,90,'#fff',700);
+  const tap=t>0.6;g.fillStyle=tap?'#3A4555':'#1F6FEB';rr(g,140,330,280,96,48);g.fill();txt(g,d.unlock,280,392,36,'#fff',900);
+  if(t>1.0){const u=ease((t-1)/0.3);g.globalAlpha=u;g.fillStyle=RED;rr(g,130,470,300,150,24);g.fill();txt(g,'✕',280,540,60,'#fff',900);txt(g,d.no,280,600,28,'#fff',900);g.globalAlpha=1}
+  if(t>1.8){const u=ease((t-1.8)/0.4);g.globalAlpha=u;panel(g,560,140,440,460,30,'#2BFF88');txt(g,'🏦',780,290,110,'#fff',700);d.only.forEach((l,i)=>txt(g,l,780,400+i*56,i?30:40,i?'#C9D1DC':'#2BFF88',900));g.globalAlpha=1}
+ },
+ scoreok(g,t,d,h){ // reel: credit score gauge, needle stays put; '변화 없음' chip
+  bgPro(g,h);const cx=540,cy=560,R=300;g.lineWidth=46;g.lineCap='round';[['#FF4D5E',Math.PI,Math.PI*1.33],['#FFC83D',Math.PI*1.36,Math.PI*1.64],['#2BFF88',Math.PI*1.67,Math.PI*2]].forEach(a=>{g.strokeStyle=a[0];g.beginPath();g.arc(cx,cy,R,a[1],a[2]);g.stroke()});g.lineCap='butt';
+  const ang=Math.PI*1.82+Math.sin(t*6)*0.02*Math.max(0,1-t);g.strokeStyle='#F2F4F7';g.lineWidth=12;g.beginPath();g.moveTo(cx,cy);g.lineTo(cx+Math.cos(ang)*240,cy+Math.sin(ang)*240);g.stroke();g.fillStyle='#F2F4F7';g.beginPath();g.arc(cx,cy,24,0,7);g.fill();
+  txt(g,d.label,540,200,40,'#C9D1DC',900);if(t>0.6){g.globalAlpha=ease((t-0.6)/0.3);g.fillStyle='#2BFF88';rr(g,340,640,400,90,45);g.fill();txt(g,d.ok,540,700,40,'#0B0E13',900);g.globalAlpha=1}
+ },
+ familycta(g,t,d,h){ // reel CTA: child sends video to parents; family proxy-apply note
+  lightBg(g,h);txt(g,d.head,540,110,48,'#1E2530',900);d.to.forEach((n,i)=>{const x=170+i*370,y=200,sent=t>0.9+i*0.4;g.fillStyle=sent?'#FFE9A8':'#ECE7DD';g.beginPath();g.arc(x+'0'*1+0,y+110,110,0,7);g.fill();txt(g,n[0],x,y+150,110,'#1E2530',700);txt(g,n[1],x,y+280,40,'#1E2530',900);
+   if(sent){g.globalAlpha=ease((t-0.9-i*0.4)/0.3);g.fillStyle='#3BA776';rr(g,x-100,y+310,200,64,32);g.fill();txt(g,'✓ 보냄',x,y+354,32,'#fff',900);g.globalAlpha=1}});
+  if(t>1.8){g.globalAlpha=ease((t-1.8)/0.4);g.fillStyle='#1E2530';rr(g,140,650,800,110,55);g.fill();txt(g,d.note,540,718,34,'#FFC83D',900);g.globalAlpha=1}
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
