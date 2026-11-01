@@ -1844,7 +1844,7 @@ function build(s,meta){
   const D=s.data,C=D.caps;
   draw=t=>{const g=ctx;g.fillStyle='#07090D';g.fillRect(0,0,W,1920);
    const sc=D.scenes.find(x=>t>=x.t0&&t<x.t1)||D.scenes[D.scenes.length-1],lt=t-sc.t0,hh=sc.h||740;off.height=hh;const og=off.getContext('2d');BGT=sc.theme?THEME[sc.theme]:null;
-   og.clearRect(0,0,W,hh);ANIM[sc.anim](og,lt,sc.data||{},hh);const k=sc.z||Math.min(1,1060/hh),dw=W*k,dh=hh*k,dy=270+(1060-dh)/2;g.drawImage(off,0,0,W,hh,(W-dw)/2,dy,dw,dh);const ft=g.createLinearGradient(0,dy,0,dy+120);ft.addColorStop(0,'rgba(7,9,13,1)');ft.addColorStop(1,'rgba(7,9,13,0)');g.fillStyle=ft;g.fillRect(0,dy,W,120);
+   og.clearRect(0,0,W,hh);ANIM[sc.anim](og,lt,sc.data||{},hh);const k=sc.z||Math.min(1,1060/hh),dw=W*k,dh=hh*k,dy=270+(1060-dh)/2;g.drawImage(off,0,0,W,hh,(W-dw)/2,dy,dw,dh);const ft=g.createLinearGradient(0,dy,0,dy+36);ft.addColorStop(0,'rgba(7,9,13,1)');ft.addColorStop(1,'rgba(7,9,13,0)');g.fillStyle=ft;g.fillRect(0,dy,W,36);
    const fade=g.createLinearGradient(0,dy+dh-160,0,dy+dh);fade.addColorStop(0,'rgba(7,9,13,0)');fade.addColorStop(1,'rgba(7,9,13,1)');g.fillStyle=fade;g.fillRect(0,dy+dh-160,W,160);
    g.fillStyle='rgba(7,9,13,1)';g.fillRect(0,0,W,Math.max(0,dy));
 
