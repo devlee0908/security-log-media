@@ -1834,6 +1834,46 @@ const ANIM={
    if(sent){g.globalAlpha=ease((t-0.9-i*0.4)/0.3);g.fillStyle='#3BA776';rr(g,x-100,y+310,200,64,32);g.fill();txt(g,'✓ 보냄',x,y+354,32,'#fff',900);g.globalAlpha=1}});
   if(t>1.8){g.globalAlpha=ease((t-1.8)/0.4);g.fillStyle='#1E2530';rr(g,140,650,800,110,55);g.fill();txt(g,d.note,540,718,34,'#FFC83D',900);g.globalAlpha=1}
  },
+ fifteen(g,t,d,h){ // dark: employee/partner badge + 15 leaked field chips pour out; side note on who's NOT in the notice
+  bgPro(g,h);g.fillStyle='#232B37';rr(g,70,70,300,400,28);g.fill();g.fillStyle='#3A4555';g.beginPath();g.arc(220,200,70,0,7);g.fill();g.fillStyle='#2A3442';rr(g,120,300,200,22,11);g.fill();rr(g,140,340,160,18,9);g.fill();
+  txt(g,d.who[0],220,420,30,'#E9EDF2',900);txt(g,d.who[1],220,520,26,'#8D97A6',800);
+  let x=410,y=80;d.f.forEach((c,i)=>{const t0=0.3+i*0.12;if(t<t0)return;const u=ease((t-t0)/0.25);g.font=`900 26px ${FONT}`;const w=g.measureText(c).width+40;if(x+w>1020){x=410;y+=64}g.globalAlpha=u;const hot=d.hot.includes(c);g.fillStyle=hot?RED:'#1E2530';rr(g,x,y,w,52,26);g.fill();if(!hot){g.strokeStyle='#3A4555';g.lineWidth=2;rr(g,x,y,w,52,26);g.stroke()}txt(g,c,x+20,y+36,26,'#F2F4F7',900,FONT,'left');g.globalAlpha=1;x+=w+10});
+  if(t>2.6){g.globalAlpha=ease((t-2.6)/0.4);g.fillStyle='#1E2530';rr(g,70,600,940,90,45);g.fill();txt(g,d.note,540,657,28,'#FFC83D',900,FONT,'center',900);g.globalAlpha=1}
+ },
+ previewhole(g,t,d,h){ // light: e-approval app with a plugged-in third-party 'preview' module; the module is the hole; two intrusion windows
+  lightBg(g,h);withShadow(g,'rgba(40,30,10,.18)',24,10,()=>{g.fillStyle='#fff';rr(g,70,70,560,470,26);g.fill()});g.fillStyle='#1E2530';rr(g,70,70,560,70,26);g.fill();g.fillRect(70,110,560,30);txt(g,d.app,350,118,30,'#fff',900);
+  for(let k=0;k<4;k++){g.fillStyle='#ECE7DD';rr(g,100,170+k*60,300,36,10);g.fill()}
+  const hit=t>1.4;g.fillStyle=hit?'#FBE3E5':'#E8F0FE';rr(g,420,170,180,220,18);g.fill();g.strokeStyle=hit?RED:'#5AB0FF';g.lineWidth=5;g.setLineDash([12,8]);rr(g,420,170,180,220,18);g.stroke();g.setLineDash([]);txt(g,'📄',510,270,64,'#fff',700);txt(g,d.mod,510,350,26,hit?RED:'#1F6FEB',900);
+  if(hit){g.strokeStyle=RED;g.lineWidth=6;g.beginPath();g.moveTo(600,280);g.lineTo(700,220);g.stroke();txt(g,'🕵️',760,210,70,'#fff',700)}
+  txt(g,d.vendor,100,425,24,'#7A818B',800,FONT,'left',500);g.fillStyle='#fff';rr(g,100,450,500,70,14);g.fill();txt(g,d.also,350,495,26,'#1E2530',900);
+  d.win.forEach((w,i)=>{if(t<2+i*0.4)return;const u=ease((t-2-i*0.4)/0.3);g.globalAlpha=u;panel(g,680,330+i*150,330,120,22,RED);txt(g,w[0],845,382+i*150,30,'#fff',900,MONO);txt(g,w[1],845,422+i*150,24,'#FFB3BB',800,MONO);g.globalAlpha=1});
+ },
+ twobreach(g,t,d,h){ // dark: vendor HQ block with 150k client dots; two breach markers on a timeline
+  bgPro(g,h);txt(g,d.hq,540,90,40,'#F2F4F7',900);numUnit(g,d.n,d.unit,540,175,64,'#FFC83D','#C9D1DC');
+  for(let i=0;i<120;i++){const a=i*2.39996,r=40+Math.sqrt(i)*22,x=540+Math.cos(a)*r*1.6,y=330+Math.sin(a)*r*0.55;g.fillStyle=t>0.2+i*0.008?'#3A4A66':'#1A212B';g.beginPath();g.arc(x,y,5,0,7);g.fill()}
+  g.fillStyle='#2A3442';rr(g,120,520,840,10,5);g.fill();d.ev.forEach((e,i)=>{const x=220+i*640/(d.ev.length-1)*(d.ev.length>1?1:0),on=t>1.2+i*0.8;g.fillStyle=on?RED:'#3A4555';g.beginPath();g.arc(x,525,20,0,7);g.fill();
+   if(on){g.globalAlpha=ease((t-1.2-i*0.8)/0.3);panel(g,x-200,560,400,140,22,RED);txt(g,e[0],x,605,30,'#fff',900,MONO);txt(g,e[1],x,645,28,'#F2F4F7',900);txt(g,e[2],x,682,22,'#8D97A6',800);g.globalAlpha=1}});
+ },
+ noticewave(g,t,d,h){ // light: notice cards for client companies flip in one by one, newest highlighted; '실제 피해 확인 X' chip
+  lightBg(g,h);d.c.forEach((c,i)=>{const t0=0.15+i*0.18,q=ease((t-t0)/0.3);if(q<=0)return;const col=i%3,row=Math.floor(i/3),x=80+col*310,y=60+row*120,nw=i===d.c.length-1;g.globalAlpha=q;
+   withShadow(g,'rgba(40,30,10,.12)',16,6,()=>{g.fillStyle=nw?'#1E2530':'#fff';rr(g,x,y,290,100,18);g.fill()});txt(g,'📢',x+40,y+64,34,'#fff',700);txt(g,c,x+80,y+62,28,nw?'#FFC83D':'#1E2530',900,FONT,'left',195);g.globalAlpha=1});
+  if(t>2.8){g.globalAlpha=ease((t-2.8)/0.4);g.fillStyle='#2E8A5F';rr(g,240,620,600,80,40);g.fill();txt(g,d.note,540,672,30,'#fff',900);g.globalAlpha=1}
+ },
+ jointteam(g,t,d,h){ // dark: government + KISA + private experts converge on an investigation table
+  bgPro(g,h);const cx=540,cy=360;g.fillStyle='#232B37';g.beginPath();g.ellipse(cx,cy,220,90,0,0,7);g.fill();txt(g,'🔍',cx,cy+22,64,'#fff',700);
+  d.m.forEach((m,i)=>{const a=-Math.PI/2+i*(2*Math.PI/d.m.length),q=ease((t-0.3-i*0.3)/0.4),r=320-80*q,x=cx+Math.cos(a)*r*1.3,y=cy+Math.sin(a)*r*0.75;g.globalAlpha=q;panel(g,x-140,y-55,280,110,24,'#5AB0FF');txt(g,m[0],x,y-5,40,'#fff',700);txt(g,m[1],x,y+38,26,'#E9EDF2',900);g.globalAlpha=1});
+  if(t>1.8){g.globalAlpha=ease((t-1.8)/0.4);g.fillStyle='#FF4D5E';rr(g,290,630,500,74,37);g.fill();txt(g,d.badge,540,678,30,'#fff',900);g.globalAlpha=1}
+ },
+ supplychain(g,t,d,h){ // light: one vendor box at top; lines to many client companies; breach turns all lines red progressively
+  lightBg(g,h);const vx=540,vy=110,hit=t>0.8;withShadow(g,'rgba(40,30,10,.18)',20,8,()=>{g.fillStyle=hit?RED:'#1E2530';rr(g,vx-200,vy-50,400,100,24);g.fill()});txt(g,d.v,vx,vy+12,34,'#fff',900);
+  d.c.forEach((c,i)=>{const x=110+i*(860/(d.c.length-1)),y=480,on=t>1.2+i*0.2;g.strokeStyle=on?RED:'#C9C1B0';g.lineWidth=on?5:3;g.beginPath();g.moveTo(vx,vy+50);g.bezierCurveTo(vx,300,x,300,x,y-50);g.stroke();
+   g.fillStyle=on?'#FBE3E5':'#fff';rr(g,x-70,y-50,140,100,18);g.fill();g.strokeStyle=on?RED:'#C9C1B0';g.lineWidth=3;rr(g,x-70,y-50,140,100,18);g.stroke();txt(g,c[0],x,y+5,40,'#1E2530',700);txt(g,c[1],x,y+40,22,'#4A5563',900,FONT,'center',130)});
+  if(t>2.6){g.globalAlpha=ease((t-2.6)/0.4);txt(g,d.note,540,640,32,'#1E2530',900);txt(g,d.sub,540,690,26,'#7A818B',800);g.globalAlpha=1}
+ },
+ todosupply(g,t,d,h){ // dark: three checklist cards with icons (consistent with tip style but new layout: horizontal rows)
+  bgPro(g,h,'rgba(43,255,136,.05)');d.c.forEach((c,i)=>{const t0=0.3+i*0.5,q=ease((t-t0)/0.35);if(q<=0)return;const y=70+i*200;g.globalAlpha=q;g.save();g.translate((1-q)*60,0);panel(g,80,y,920,170,28,c[3]);
+   g.fillStyle=hx(c[3],.15);g.beginPath();g.arc(180,y+85,60,0,7);g.fill();txt(g,c[0],180,y+110,60,'#fff',700);txt(g,c[1],280,y+75,40,'#F2F4F7',900,FONT,'left',690);txt(g,c[2],280,y+125,28,'#8D97A6',800,FONT,'left',690);g.restore();g.globalAlpha=1});
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
