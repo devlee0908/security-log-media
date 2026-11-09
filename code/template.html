@@ -1953,6 +1953,52 @@ const ANIM={
   txt(g,d.to,740,270,34,'#1E2530',900);txt(g,d.msg,740,330,28,'#4A5563',800,FONT,'center',400);g.globalAlpha=1;
   if(t>1.3){g.globalAlpha=ease((t-1.3)/0.3);g.fillStyle='#3BA776';rr(g,600,440,280,72,36);g.fill();txt(g,'✓ 보냄',740,488,34,'#fff',900);g.globalAlpha=1}
  },
+ tripleak(g,t,d,h){ // dark: travel booking card; fields leak out; a 2-year review-page exposure bar
+  bgPro(g,h);g.fillStyle='#F4F6F9';rr(g,80,70,460,430,26);g.fill();txt(g,'🧳',140,140,50,'#fff',700);txt(g,d.card,200,135,32,'#1E2530',900,FONT,'left');
+  d.f.forEach((f,i)=>{const y=180+i*62,t0=0.5+i*0.25,q=ease((t-t0)/0.4);g.fillStyle='#ECEFF3';rr(g,110,y,400,48,10);g.fill();txt(g,f,130,y+34,26,'#4A5563',800,FONT,'left');
+   if(q>0){g.globalAlpha=1-0.2*q;g.fillStyle=RED;rr(g,110+q*480,y,300,48,10);g.fill();txt(g,f,130+q*480,y+34,26,'#fff',900,FONT,'left');g.globalAlpha=1}});
+  if(t>2){const u=ease(clamp((t-2)/1.2));txt(g,d.bar[0],80,580,28,'#C9D1DC',900,FONT,'left');g.fillStyle='#2A3442';rr(g,80,605,920,36,18);g.fill();g.fillStyle='#FFC83D';rr(g,80,605,920*u,36,18);g.fill();
+   txt(g,d.bar[1],80,680,26,'#8D97A6',800,MONO,'left');txt(g,d.bar[2],1000,680,26,'#8D97A6',800,MONO,'right')}
+ },
+ courtcut(g,t,d,h){ // light: gavel strikes, 50만 won stack shrinks to 10만; 'standard since 2008' badge
+  lightBg(g,h);const cut=t>1.4,u=ease((t-1.4)/0.5);
+  const bills=(x,n,col,label,y0)=>{for(let i=0;i<n;i++){g.fillStyle=col;rr(g,x,y0-i*22,220,70,10);g.fill();g.strokeStyle='rgba(0,0,0,.1)';g.lineWidth=2;rr(g,x,y0-i*22,220,70,10);g.stroke()}txt(g,label,x+110,y0+130,44,'#1E2530',900)};
+  bills(140,10,'#7FB77E',d.a,470);txt(g,d.al,250,670,28,'#7A818B',800);
+  txt(g,'→',540,420,64,'#B3A88F',900);
+  if(cut){g.globalAlpha=u;bills(700,2,'#7FB77E',d.b,470);txt(g,d.bl,810,670,28,'#7A818B',800);g.globalAlpha=1}
+  const sw=t<1.4?Math.sin(t*4)*0.3-0.6:0.2;g.save();g.translate(540,170);g.rotate(sw);g.fillStyle='#8A5A2B';rr(g,-20,0,40,170,10);g.fill();rr(g,-90,-40,180,70,18);g.fill();g.restore();
+  if(t>2.2){g.globalAlpha=ease((t-2.2)/0.4);g.fillStyle='#1E2530';rr(g,320,40,440,64,32);g.fill();txt(g,d.badge,540,83,28,'#FFC83D',900);g.globalAlpha=1}
+ },
+ perrecord(g,t,d,h){ // dark: 1억 400만 counter vs small winners stack; '건당 약 26원'
+  bgPro(g,h);const v=Math.round(10400*ease(clamp(t/1.6)));txt(g,d.l1,300,150,30,'#C9D1DC',900);numUnit(g,(v>=10000?'1억 '+(v-10000)+'만':v+'만'),'건',300,270,90,RED,'#E9EDF2');
+  for(let i=0;i<180;i++){const c=i%18,r=Math.floor(i/18);g.fillStyle=t>0.1+i*0.006?'#3A4A66':'#1A212B';g.beginPath();g.arc(90+c*24,360+r*30,8,0,7);g.fill()}
+  if(t>1.8){const u=ease((t-1.8)/0.4);g.globalAlpha=u;panel(g,620,90,390,230,26,'#2BFF88');txt(g,d.l2,815,150,28,'#C9D1DC',900);txt(g,d.win,815,230,64,'#2BFF88',900);txt(g,d.winsub,815,285,24,'#8D97A6',800);
+   panel(g,620,360,390,250,26,'#FFC83D');txt(g,d.l3,815,420,28,'#C9D1DC',900);numUnit(g,'26','원',815,530,110,'#FFC83D','#E9EDF2');txt(g,d.l3s,815,585,22,'#8D97A6',800);g.globalAlpha=1}
+ },
+ zerocase(g,t,d,h){ // light: scale balancing 'protective measures done' vs 'leak'; result 0원 stamp
+  lightBg(g,h);const tilt=ease(clamp((t-0.5)/1))*0.18;g.save();g.translate(540,200);g.fillStyle='#1E2530';rr(g,-10,0,20,330,8);g.fill();g.rotate(-tilt);g.fillStyle='#1E2530';rr(g,-330,-8,660,16,8);g.fill();
+  [[-280,d.l,'#3BA776'],[280,d.r,RED]].forEach(([x,lab,col])=>{g.strokeStyle='#8A806C';g.lineWidth=3;g.beginPath();g.moveTo(x,0);g.lineTo(x-80,140);g.moveTo(x,0);g.lineTo(x+80,140);g.stroke();g.fillStyle=col;rr(g,x-120,140,240,90,18);g.fill();txt(g,lab,x,197,28,'#fff',900,FONT,'center',220)});g.restore();
+  g.fillStyle='#1E2530';rr(g,420,530,240,24,12);g.fill();
+  if(t>1.8){const u=ease((t-1.8)/0.3),sc=1.5-0.5*u;g.save();g.translate(540,650);g.rotate(-0.06);g.scale(sc,sc);g.globalAlpha=u;g.fillStyle='rgba(255,255,255,.9)';rr(g,-230,-55,460,110,16);g.fill();g.strokeStyle=RED;g.lineWidth=7;rr(g,-230,-55,460,110,16);g.stroke();txt(g,d.stamp,0,18,48,RED,900);g.restore();g.globalAlpha=1}
+ },
+ refused(g,t,d,h){ // dark: two mediation proposals stamped 'rejected'; voucher replacement
+  bgPro(g,h);d.c.forEach((c,i)=>{const x=80+i*480,t0=0.3+i*0.6,q=ease((t-t0)/0.35);if(q<=0)return;g.globalAlpha=q;g.fillStyle='#F4F6F9';rr(g,x,70,440,440,24);g.fill();txt(g,c[0],x+40,130,30,'#7A818B',800,FONT,'left');txt(g,c[1],x+40,195,40,'#1E2530',900,FONT,'left');
+   numUnit(g,c[2],'원',x+220,330,96,'#1F6FEB','#1E2530');txt(g,c[3],x+220,390,26,'#4A5563',800);
+   if(t>t0+0.8){const u=ease((t-t0-0.8)/0.3),sc=1.5-0.5*u;g.save();g.translate(x+330,460);g.rotate(-0.15);g.scale(sc*0.7,sc*0.7);g.globalAlpha=u*q;g.fillStyle='rgba(255,255,255,.9)';rr(g,-120,-46,240,92,14);g.fill();g.strokeStyle=RED;g.lineWidth=8;rr(g,-120,-46,240,92,14);g.stroke();txt(g,d.stamp,0,18,52,RED,900);g.restore()}g.globalAlpha=1});
+  if(t>2.4){g.globalAlpha=ease((t-2.4)/0.4);g.fillStyle='#1E2530';rr(g,80,560,920,110,30);g.fill();txt(g,'🎟',150,630,50,'#fff',700);txt(g,d.note,200,628,30,'#FFC83D',900,FONT,'left',780);g.globalAlpha=1}
+ },
+ dropoff(g,t,d,h){ // light: funnel 3267 applicants -> 485 to court (~15%); legal 300만 cap card with 'rejected' note
+  lightBg(g,h);const a=ease(clamp(t/1.2)),b=ease(clamp((t-1)/1));g.fillStyle='#C9D1DC';rr(g,100,140,560*a,110,20);g.fill();txt(g,d.a[0],120,210,34,'#1E2530',900,FONT,'left');txt(g,d.a[1],120,120,26,'#7A818B',800,FONT,'left');
+  g.fillStyle='#E0303F';rr(g,100,330,84*b,110,20);g.fill();txt(g,d.b[0],210,400,34,'#E0303F',900,FONT,'left');txt(g,d.b[1],120,310,26,'#7A818B',800,FONT,'left');
+  if(t>1.8){g.globalAlpha=ease((t-1.8)/0.4);withShadow(g,'rgba(40,30,10,.15)',20,8,()=>{g.fillStyle='#fff';rr(g,700,110,300,360,24);g.fill()});txt(g,d.c[0],850,170,28,'#1E2530',900);numUnit(g,d.c[1],'원',850,270,64,'#1F6FEB','#1E2530');
+   txt(g,d.c[2],850,330,24,'#7A818B',800);g.fillStyle='#FBE3E5';rr(g,720,370,260,80,14);g.fill();txt(g,d.c[3],850,402,22,'#E0303F',900);txt(g,d.c[4],850,432,22,'#E0303F',900);g.globalAlpha=1}
+  if(t>2.6){g.globalAlpha=ease((t-2.6)/0.4);txt(g,d.note,540,620,30,'#1E2530',900);g.globalAlpha=1}
+ },
+ canrdo(g,t,d,h){ // dark: three step cards left-to-right with arrows + hotline chip
+  bgPro(g,h,'rgba(43,255,136,.05)');d.c.forEach((c,i)=>{const x=60+i*330,t0=0.3+i*0.5,q=ease((t-t0)/0.35);if(q<=0)return;g.globalAlpha=q;panel(g,x,80,300,430,30,c[3]);g.fillStyle=c[3];g.beginPath();g.arc(x+44,124,26,0,7);g.fill();txt(g,String(i+1),x+44,135,30,'#0B0E13',900,MONO);
+   txt(g,c[0],x+150,250,80,'#fff',700);c[1].split('\n').forEach((l,k)=>txt(g,l,x+150,350+k*46,34,'#F2F4F7',900));txt(g,c[2],x+150,470,22,'#8D97A6',800,FONT,'center',270);g.globalAlpha=1;if(i<2&&t>t0+0.4)txt(g,'→',x+315,300,40,'#5A6575',900)});
+  if(t>2){g.globalAlpha=ease((t-2)/0.4);g.fillStyle='#1E2530';rr(g,140,570,800,90,45);g.fill();txt(g,d.call,540,628,30,'#2BFF88',900);g.globalAlpha=1}
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
