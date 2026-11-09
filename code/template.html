@@ -1918,6 +1918,41 @@ const ANIM={
   if(t>1.8){g.globalAlpha=ease((t-1.8)/0.4);panel(g,680,120,330,360,26,'#FFC83D');txt(g,'⚠',845,200,56,'#FFC83D',700);d.w.forEach((l,i)=>txt(g,l,845,270+i*46,i?26:30,i?'#C9D1DC':'#F2F4F7',900,i?MONO:FONT,'center',300));g.globalAlpha=1}
   if(t>2.4){g.globalAlpha=ease((t-2.4)/0.4);g.fillStyle='#1E2530';rr(g,80,540,930,90,45);g.fill();txt(g,d.note,545,597,30,'#FFB3BB',900,FONT,'center',880);g.globalAlpha=1}
  },
+ airsms(g,t,d,h){ // reel hook: phone lock screen, fake airline refund SMS slides in, link pulses, then red X
+  bgPro(g,h);const px=300,py=20,pw=480,ph=800;withShadow(g,'rgba(0,0,0,.6)',36,14,()=>{g.fillStyle='#232B37';rr(g,px,py,pw,ph,56);g.fill()});g.fillStyle='#0E1218';rr(g,px+16,py+16,pw-32,ph-32,44);g.fill();
+  txt(g,'9:41',540,py+140,90,'#E9EDF2',800);txt(g,d.date,540,py+190,28,'#8D97A6',800);
+  const q=ease((t-0.3)/0.4);g.globalAlpha=q;g.save();g.translate(0,(1-q)*-60);g.fillStyle='#F4F6F9';rr(g,px+36,py+250,pw-72,250,26);g.fill();txt(g,'✈',px+80,py+305,34,'#1F6FEB',700);txt(g,d.from,px+110,py+305,26,'#1E2530',900,FONT,'left',300);
+  d.msg.forEach((l,i)=>txt(g,l,px+66,py+360+i*42,28,i===d.msg.length-1?'#1F6FEB':'#1E2530',i===d.msg.length-1?900:800,FONT,'left',350));g.restore();g.globalAlpha=1;
+  if(t>1.8){const u=ease((t-1.8)/0.25),sc=1.6-0.6*u;g.save();g.translate(540,py+380);g.scale(sc,sc);g.globalAlpha=u;g.strokeStyle=RED;g.lineWidth=18;g.lineCap='round';g.beginPath();g.moveTo(-120,-120);g.lineTo(120,120);g.moveTo(120,-120);g.lineTo(-120,120);g.stroke();g.lineCap='butt';g.restore();g.globalAlpha=1}
+ },
+ gdshub(g,t,d,h){ // reel: one global reservation system in the middle, airlines and travel agencies around; hub turns red
+  bgPro(g,h);const cx=540,cy=400,hit=t>1.2;d.n.forEach((n,i)=>{const a=-Math.PI/2+i*2*Math.PI/d.n.length,x=cx+Math.cos(a)*360,y=cy+Math.sin(a)*290,on=t>0.2+i*0.15;if(!on)return;
+   g.strokeStyle=hit?hx(RED,.7):'#3A4555';g.lineWidth=4;g.beginPath();g.moveTo(cx,cy);g.lineTo(x,y);g.stroke();panel(g,x-110,y-50,220,100,22,hit?RED:'#5A6575');txt(g,n[0],x-55,y+18,44,'#fff',700);txt(g,n[1],x+25,y+12,28,'#F2F4F7',900,FONT,'center',130)});
+  g.fillStyle=hit?RED:'#1F6FEB';g.beginPath();g.arc(cx,cy,120,0,7);g.fill();txt(g,'🌐',cx,cy-6,70,'#fff',700);txt(g,d.hub,cx,cy+60,28,'#fff',900);
+  if(hit){for(let k=0;k<3;k++){const r=((t*0.8+k/3)%1);g.strokeStyle=hx(RED,.5*(1-r));g.lineWidth=5;g.beginPath();g.arc(cx,cy,120+r*120,0,7);g.stroke()}}
+ },
+ pnrleak(g,t,d,h){ // reel: timeline 2023.8 -> 2026.9 with a stolen-key login, then a PNR chip pops
+  bgPro(g,h);g.fillStyle='#2A3442';rr(g,120,250,840,12,6);g.fill();const p=ease(clamp((t-0.4)/1.6));g.fillStyle=RED;rr(g,120,250,840*p,12,6);g.fill();
+  d.tl.forEach((e,i)=>{const x=120+i*840;g.fillStyle=RED;g.beginPath();g.arc(x,256,22,0,7);g.fill();txt(g,e[0],x,190,40,'#F2F4F7',900,MONO);txt(g,e[1],x,330,26,'#8D97A6',800)});
+  txt(g,'🔑',120+840*p,236,50,'#fff',700);txt(g,d.mid,540,420,32,'#C9D1DC',900);
+  if(t>2.2){const u=ease((t-2.2)/0.35);g.globalAlpha=u;g.save();g.translate(540,580);g.scale(0.8+0.2*u,0.8+0.2*u);panel(g,-300,-90,600,180,30,'#FFC83D');txt(g,d.pnr[0],0,-15,30,'#C9D1DC',900);txt(g,d.pnr[1],0,50,60,'#FFC83D',900,MONO);g.restore();g.globalAlpha=1}
+ },
+ pnrlookup(g,t,d,h){ // reel twist: booking lookup form (PNR + name) -> itinerary card opens
+  lightBg(g,h);const px=120,py=40;withShadow(g,'rgba(40,30,10,.18)',24,10,()=>{g.fillStyle='#fff';rr(g,px,py,840,320,26);g.fill()});txt(g,d.form,px+40,py+70,32,'#1E2530',900,FONT,'left');
+  const f=(y,lab,val,t0)=>{g.fillStyle='#F4EFE6';rr(g,px+40,y,520,70,14);g.fill();txt(g,lab,px+60,y+45,26,'#8A806C',800,FONT,'left');const n=Math.floor(clamp((t-t0)/0.6)*val.length);txt(g,val.slice(0,n),px+250,y+46,30,'#1E2530',900,MONO,'left')};
+  f(py+100,d.f1[0],d.f1[1],0.2);f(py+190,d.f2[0],d.f2[1],0.9);const pr=t>1.6;g.fillStyle=pr?'#1E2530':'#1F6FEB';rr(g,px+600,py+150,200,90,45);g.fill();txt(g,d.btn,px+700,py+207,32,'#fff',900);
+  if(t>1.9){const u=ease((t-1.9)/0.4);g.globalAlpha=u;g.save();g.translate(0,(1-u)*40);g.fillStyle='#1E2530';rr(g,px,400,840,360,26);g.fill();txt(g,'✈',px+70,480,60,'#5AB0FF',700);
+   d.it.forEach((l,i)=>txt(g,l,px+130,470+i*60,i?30:36,i?'#C9D1DC':'#F2F4F7',900,FONT,'left',680));g.restore();g.globalAlpha=1}
+ },
+ airtodo(g,t,d,h){ // reel: three check rows tick on in sync with narration windows (d.at)
+  bgPro(g,h,'rgba(43,255,136,.05)');d.c.forEach((c,i)=>{const t0=d.at[i],q=ease((t-t0)/0.35);if(q<=0)return;const y=80+i*240;g.globalAlpha=q;g.save();g.translate((1-q)*60,0);panel(g,80,y,920,200,30,'#2BFF88');
+   g.fillStyle=hx('#2BFF88',.15);g.beginPath();g.arc(190,y+100,66,0,7);g.fill();txt(g,c[0],190,y+125,64,'#fff',700);txt(g,c[1],300,y+90,40,'#F2F4F7',900,FONT,'left',680);txt(g,c[2],300,y+145,28,'#8D97A6',800,FONT,'left',680);g.restore();g.globalAlpha=1});
+ },
+ tripshare(g,t,d,h){ // reel CTA: suitcase + chat bubble 'sent to friend'
+  lightBg(g,h);txt(g,'🧳',360,380,200,'#fff',700);const u=ease((t-0.5)/0.4);g.globalAlpha=u;withShadow(g,'rgba(40,30,10,.18)',20,8,()=>{g.fillStyle='#fff';rr(g,520,200,440,200,36);g.fill()});
+  txt(g,d.to,740,270,34,'#1E2530',900);txt(g,d.msg,740,330,28,'#4A5563',800,FONT,'center',400);g.globalAlpha=1;
+  if(t>1.3){g.globalAlpha=ease((t-1.3)/0.3);g.fillStyle='#3BA776';rr(g,600,440,280,72,36);g.fill();txt(g,'✓ 보냄',740,488,34,'#fff',900);g.globalAlpha=1}
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
