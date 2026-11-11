@@ -2038,6 +2038,35 @@ const ANIM={
   const p=clamp((t-2)/1.2);g.fillStyle='#C9D1DC';rr(g,110,560,500,20,10);g.fill();g.fillStyle='#3BA776';rr(g,110,560,500*p,20,10);g.fill();
   d.r.forEach((r,i)=>{if(t<2.4+i*0.3)return;const u=ease((t-2.4-i*0.3)/0.3);g.globalAlpha=u;panel(g,680,100+i*270,330,230,26,r[2]);txt(g,r[0],845,190+i*270,60,'#fff',700);txt(g,r[1],845,280+i*270,28,'#F2F4F7',900,FONT,'center',300);g.globalAlpha=1});
  },
+ namecall(g,t,d,h){ // reel: incoming call from unknown 010 number; speech bubbles use MY name + official-sounding pretext
+  bgPro(g,h);const px=330,py=30,pw=420,ph=760,sh=t<2?Math.sin(t*38)*4:0;g.save();g.translate(sh,0);withShadow(g,'rgba(0,0,0,.6)',36,14,()=>{g.fillStyle='#232B37';rr(g,px,py,pw,ph,54);g.fill()});g.fillStyle='#0E1218';rr(g,px+14,py+14,pw-28,ph-28,42);g.fill();
+  txt(g,d.label,540,py+120,28,'#8D97A6',800);txt(g,d.num,540,py+185,46,'#F2F4F7',900,MONO);for(let k=0;k<3;k++){const r=(t*0.9+k/3)%1;g.strokeStyle=hx(ACC,.5*(1-r));g.lineWidth=4;g.beginPath();g.arc(540,py+420,60+r*110,0,7);g.stroke()}
+  g.fillStyle='#1E2530';g.beginPath();g.arc(540,py+420,60,0,7);g.fill();txt(g,'📞',540,py+440,56,'#fff',700);g.restore();
+  d.say.forEach((b,i)=>{const t0=0.6+i*1.2,q=ease((t-t0)/0.35);if(q<=0)return;const y=200+i*230,x=i%2?560:60;g.globalAlpha=q;withShadow(g,'rgba(0,0,0,.4)',18,6,()=>{g.fillStyle='#FFFFFF';rr(g,x,y,460,150,28);g.fill()});
+   b.forEach((l,k)=>txt(g,l,x+230,y+62+k*50,k?30:34,k?'#1E2530':RED,900,FONT,'center',420));g.globalAlpha=1});
+ },
+ profilebuild(g,t,d,h){ // reel: leaked fragments from several breaches fly together into one 'me' profile card
+  bgPro(g,h);const cx=540,cy=430;d.f.forEach((f,i)=>{const a=i*(2*Math.PI/d.f.length),q=ease(clamp((t-0.2-i*0.18)/0.8)),r=380-300*q,x=cx+Math.cos(a)*r*1.1-90,y=cy+Math.sin(a)*r*0.8-28;
+   g.fillStyle=q>=1?'#3A4A66':RED;rr(g,x,y,180,56,14);g.fill();txt(g,f[0],x+90,y+38,24,'#fff',900,FONT,'center',170);if(q<1)txt(g,f[1],x+90,y-10,20,'#8D97A6',800,FONT,'center',170)});
+  if(t>2.2){const u=ease((t-2.2)/0.4);g.globalAlpha=u;g.save();g.translate(cx,cy);g.scale(0.85+0.15*u,0.85+0.15*u);g.fillStyle='#F4F6F9';rr(g,-230,-150,460,300,28);g.fill();g.fillStyle='#8A93A0';g.beginPath();g.arc(-130,-30,60,0,7);g.fill();
+   d.card.forEach((l,k)=>txt(g,l,-40,-70+k*52,k?28:36,k?'#4A5563':'#1E2530',900,FONT,'left',250));g.restore();g.globalAlpha=1}
+  if(t>2.8){g.globalAlpha=ease((t-2.8)/0.4);txt(g,d.note,540,690,32,'#FFB3BB',900);g.globalAlpha=1}
+ },
+ lagnotice(g,t,d,h){ // reel twist: timeline breach -> +8d phone opened -> money out -> notice arrives late
+  bgPro(g,h);g.fillStyle='#2A3442';rr(g,90,330,900,12,6);g.fill();const p=ease(clamp((t-0.3)/2.6));g.fillStyle=RED;rr(g,90,330,900*p,12,6);g.fill();
+  d.ev.forEach((e,i)=>{const x=230+e[0]*620,on=p>=e[0]-0.001;g.fillStyle=on?(e[3]||RED):'#3A4555';g.beginPath();g.arc(x,336,22,0,7);g.fill();if(!on)return;
+   const up=i%2===0,y=up?120:400;panel(g,x-140,y,280,170,22,e[3]||RED);txt(g,e[1],x,y+60,30,'#F2F4F7',900,MONO,'center',260);e[2].split('\n').forEach((l,k)=>txt(g,l,x,y+105+k*38,26,'#C9D1DC',900,FONT,'center',260))});
+  if(t>3.2){g.globalAlpha=ease((t-3.2)/0.4);g.fillStyle='#1E2530';rr(g,140,660,800,100,50);g.fill();txt(g,d.note,540,722,32,'#FFC83D',900,FONT,'center',760);g.globalAlpha=1}
+ },
+ calltodo(g,t,d,h){ // reel: two action cards tick on at narration times
+  bgPro(g,h,'rgba(43,255,136,.05)');d.c.forEach((c,i)=>{const t0=d.at[i],q=ease((t-t0)/0.35);if(q<=0)return;const y=110+i*320;g.globalAlpha=q;g.save();g.translate((1-q)*60,0);panel(g,80,y,920,270,32,'#2BFF88');
+   g.fillStyle=hx('#2BFF88',.15);g.beginPath();g.arc(210,y+135,80,0,7);g.fill();txt(g,c[0],210,y+165,80,'#fff',700);txt(g,c[1],340,y+120,44,'#F2F4F7',900,FONT,'left',620);txt(g,c[2],340,y+180,30,'#8D97A6',800,FONT,'left',620);g.restore();g.globalAlpha=1});
+ },
+ commentcta(g,t,d,h){ // reel CTA: comment box with typing animation + arrow down
+  lightBg(g,h);txt(g,d.q,540,170,48,'#1E2530',900,FONT,'center',940);withShadow(g,'rgba(40,30,10,.15)',20,8,()=>{g.fillStyle='#fff';rr(g,110,280,860,140,70);g.fill()});
+  const n=Math.floor(clamp((t-0.4)/1.6)*d.typing.length);txt(g,'🙋',190,370,56,'#fff',700);txt(g,d.typing.slice(0,n)+((t*2)%1<0.5?'|':''),250,365,34,'#1E2530',800,FONT,'left',680);
+  const k=(t*1.5)%1;txt(g,'👇',540,580+k*30,110,'#fff',700);
+ },
  checklist(g,t,d,h){
   bgPro(g,h,'rgba(43,255,136,.05)');
   d.items.forEach((s,i)=>{const t0=0.5+i*0.9, y=70+i*130, p=ease((t-t0)/0.4), slide=ease((t-t0+0.5)/0.35);
