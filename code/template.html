@@ -2085,6 +2085,19 @@ const ANIM={
    txt(g,'☠️',X+W2/2,Y+330,120,'#fff',700);txt(g,d.hit,X+W2/2,Y+440,48,'#fff',900,FONT,'center',W2-60);g.globalAlpha=1}
   g.globalAlpha=ease(clamp(t/0.4));g.fillStyle='#1E2530';rr(g,70,240,240,110,24);g.fill();txt(g,'접속만',190,290,30,'#8D97A6',900,FONT,'center',220);txt(g,'해도',190,335,36,'#FFC83D',900,FONT,'center',220);g.globalAlpha=1;
  },
+ b64ovf(g,t,d,h){ // light: short broken base64 string enters decoder, output buffer overflows 62 bytes into red zone
+  lightBg(g,h);txt(g,d.in,80,90,28,'#7A818B',900,FONT,'left');withShadow(g,'rgba(40,30,10,.15)',18,6,()=>{g.fillStyle='#fff';rr(g,80,110,540,90,18);g.fill()});const n=Math.floor(clamp(t/0.8)*d.s.length);txt(g,d.s.slice(0,n),110,168,34,'#1E2530',900,MONO,'left',480);
+  g.fillStyle='#1E2530';rr(g,700,100,300,110,24);g.fill();txt(g,'⚙️',760,170,44,'#fff',700);d.dec.split('\n').forEach((l,k)=>txt(g,l,880,148+k*38,28,'#F2F4F7',900,FONT,'center',170));
+  txt(g,d.buf,80,290,28,'#7A818B',900,FONT,'left');const cells=16,cw=50,x0=80,y0=310,fill=clamp((t-0.9)/1.4)*(cells+6);
+  for(let i=0;i<cells+6;i++){const x=x0+i*cw*0.84,over=i>=cells;if(x>1000)break;g.fillStyle=over?(i<fill?'#E0303F':'#F1D4D7'):(i<fill?'#1F6FEB':'#D9D2C3');rr(g,x,y0,cw*0.78,80,8);g.fill()}
+  g.strokeStyle='#1E2530';g.lineWidth=4;g.setLineDash([10,8]);g.beginPath();g.moveTo(x0+cells*cw*0.84-6,y0-20);g.lineTo(x0+cells*cw*0.84-6,y0+100);g.stroke();g.setLineDash([]);
+  txt(g,d.ok,x0+cells*cw*0.42,y0+135,24,'#4A5563',800);if(fill>cells){g.globalAlpha=ease(clamp((fill-cells)/2));txt(g,d.bad,930,y0+135,26,'#E0303F',900,FONT,'center',200);g.globalAlpha=1}
+  if(t>2.4){g.globalAlpha=ease((t-2.4)/0.4);g.fillStyle='#1E2530';rr(g,80,560,920,110,30);g.fill();txt(g,d.note,540,628,30,'#FFC83D',900,FONT,'center',860);g.globalAlpha=1}
+ },
+ urgency(g,t,d,h){ // light: status board rows with icon + state chip
+  lightBg(g,h);d.r.forEach((r,i)=>{const t0=0.2+i*0.45,q=ease((t-t0)/0.35);if(q<=0)return;const y=50+i*165;g.globalAlpha=q;g.save();g.translate((1-q)*40,0);withShadow(g,'rgba(40,30,10,.14)',18,6,()=>{g.fillStyle='#fff';rr(g,80,y,920,140,24);g.fill()});
+   txt(g,r[0],150,y+88,52,'#fff',700);txt(g,r[1],220,y+62,32,'#1E2530',900,FONT,'left',480);txt(g,r[2],220,y+104,24,'#7A818B',800,FONT,'left',480);g.fillStyle=r[4];rr(g,720,y+40,250,60,30);g.fill();txt(g,r[3],845,y+80,26,'#fff',900,FONT,'center',230);g.restore();g.globalAlpha=1});
+ },
  aiuse(g,t,d,h){ // dark: 3 employee desks send chat bubbles to outside AI clouds; company 'radar' blind
   bgPro(g,h);g.setLineDash([14,10]);g.strokeStyle='#3A4555';g.lineWidth=3;rr(g,60,90,420,560,30);g.stroke();g.setLineDash([]);txt(g,d.co,270,140,30,'#8D97A6',900,FONT,'center',380);
   d.who.forEach((w,i)=>{const y=210+i*150;panel(g,100,y,340,110,22,null);txt(g,w[0],160,y+72,50,'#fff',700);txt(g,w[1],210,y+50,28,'#F2F4F7',900,FONT,'left',220);txt(g,w[2],210,y+88,22,'#FF8A3D',900,FONT,'left',220)});
